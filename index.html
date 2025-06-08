@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Super Hydra Turbo Edition</title>
+</head>
+
+<body>
+  <div class="editor-container">
+    <div id="editor"></div>
+    <canvas id="canvas"></canvas>
+  </div>
+
+  <div id="config-toggle" class="config-toggle">
+    <span>⚙️</span>
+  </div>
+
+  <!-- Config Panel -->
+  <div id="config-panel" class="config-panel">
+    <div class="config-header">
+      <img src="/src/logo.svg" alt="Super Hydra Turbo Logo" class="logo">
+      <button id="config-close" class="config-close">×</button>
+    </div>
+    <div class="config-content">
+      <div class="config-section">
+        <label>Font :</label>
+        <select id="font-select">
+          <option value="Fira Code">Fira Code</option>
+          <option value="Consolas">Consolas</option>
+          <option value="Cascadia">Cascadia</option>
+          <option value="monospace">Monospace</option>
+          <option value="JetBrainsMono">JetBrains Mono</option>
+          <option value="UbuntuMono">Ubuntu Mono</option>
+        </select>
+      </div>
+
+      <div class="config-section">
+        <label>Font Size :<span id="font-size-value">16px</span></label>
+        <input type="range" id="font-size" min="12" max="48" value="24">
+
+      </div>
+
+      <div class="config-section">
+        <label>Theme editor:</label>
+        <select id="theme-select">
+          <option value="cobalt">Cobalt</option>
+          <option value="darcula">Dracula</option>
+          <option value="monokai">Monokai</option>
+          <option value="material">Material</option>
+          <option value="nord">Nord</option>
+          <option value="base16-dark">Base16 Dark</option>
+        </select>
+      </div>
+
+      <div class="config-section">
+        <h4>Shortcuts</h4>
+        <div id="shortcuts-list"></div>
+      </div>
+
+      <div class="config-section">
+        <button id="open-popup" class="btn">📺 Open second window</button>
+      </div>
+
+      <!-- About -->
+      <div class="config-section">
+        <button id="show-about" class="btn btn-secondary">ℹ️ About & Credits</button>
+      </div>
+
+      <!-- Modal About -->
+      <div id="about-modal" class="about-modal">
+        <div class="about-content">
+          <div class="about-header">
+            <h3>Super Hydra Turbo Edition</h3>
+            <button id="close-about" class="config-close">×</button>
+          </div>
+          <div class="about-body">
+            <div class="about-section">
+              <h4>🎨 What is Hydra?</h4>
+              <p>Hydra is a live coding environment for creating visuals using WebGL shaders. It allows real-time
+                manipulation of video streams and generative graphics through a simple JavaScript syntax.</p>
+            </div>
+
+            <div class="about-section">
+              <h4>👊 Why Super Hydra Turbo Edition?</h4>
+              <p>It's simply a frontend for Hydra with some cool features designed for live performance.</p>
+            </div>
+
+            <div class="about-section">
+              <h4>⚡ Features</h4>
+              <ul class="features-list">
+                <li>All Hydra functions</li>
+                <li>A clean editor</li>
+                <li>Font, font size, theme selectors</li>
+                <li>Autocomplete with default parameters</li>
+                <li>Additional shaders and functions from the community</li>
+                <li>Second window for live performance</li>
+                <li>Tooltips documentation</li>
+                <li>Increment/decrement value & evaluate for VJ style</li>
+              </ul>
+            </div>
+
+            <div class="about-section">
+              <h4>🛠️ Tools & Technologies</h4>
+              <div class="tool-item">
+                <strong>Hydra Synth</strong>
+                <span>by Olivia Jack</span>
+                <p>The core live coding video synthesis engine powering the visual generation.</p>
+                <a href="https://hydra.ojack.xyz/" target="_blank">hydra.ojack.xyz</a>
+              </div>
+
+              <div class="tool-item">
+                <strong>Hydra Extra Shaders</strong>
+                <span>by Thomas Jourdan</span>
+                <p>Some extra shaders and new sources </p>
+                <a href="https://gitlab.com/metagrowing/extra-shaders-for-hydra" target="_blank">Gitlab</a>
+              </div>
+
+              <div class="tool-item">
+                <strong>CodeMirror</strong>
+                <span>by Marijn Haverbeke</span>
+                <p>Advanced code editor component providing syntax highlighting, autocompletion, and editing features.
+                </p>
+                <a href="https://codemirror.net/" target="_blank">codemirror.net</a>
+              </div>
+
+              <div class="about-section">
+                <h4>🌐 Community & Resources</h4>
+                <div class="links-grid">
+                  <a href="https://hydra.ojack.xyz/docs/" target="_blank">📚 Hydra Documentation</a>
+                  <a href="https://github.com/ojack/hydra" target="_blank">💻 Hydra GitHub</a>
+                  <a href="https://crashserver.fr" target="_blank">🌐 Crash Server</a>
+                  <a href="https://livecodingstrasbourg.github.io/" target="_blank">📺 Toplap Strasbourg</a>
+                </div>
+              </div>
+
+              <div class="about-footer">
+                <p>Super Hydra Turbo Edition - Enhanced interface for creative coding</p>
+                <p>Built with ❤️ for the live coding community by <a href="https://crashserver.fr">Crash Server</a></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script type="module" src="/src/js/main.js"></script>
+</body>
+
+</html>

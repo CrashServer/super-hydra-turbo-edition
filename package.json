@@ -1,0 +1,18 @@
+{
+  "name": "super-hydra-turbo",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "vite": "^6.3.5"
+  },
+  "dependencies": {
+    "codemirror": "^5.65.19",
+    "hydra-synth": "^1.3.29"
+  }
+}
