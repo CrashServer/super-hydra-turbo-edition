@@ -8,6 +8,8 @@ import 'codemirror/lib/codemirror.css'
 import 'codemirror/addon/hint/show-hint.css'
 import 'codemirror/addon/dialog/dialog.css'
 import '/src/css/style.css';
+import '/src/css/configPanel.css';
+import '/src/css/customCodeMirror.css';
 
 // codeMirror library
 import 'codemirror/addon/dialog/dialog.js'
@@ -24,6 +26,7 @@ import 'codemirror/addon/selection/mark-selection';
 import { configPanel } from './configPanel.js';
 import { hydraUtils } from './hydraUtils.js';
 import { hydraAutocomplete } from './hydraAutocomplete.js';
+import { hydraColorPicker } from './colorPicker.js';
 import { showHydraDefinition, removeAllTooltips } from './hydraDefinition.js';
 
 // Initialiser CodeMirror
@@ -102,13 +105,32 @@ document.addEventListener('DOMContentLoaded', () => {
     'Esc': () => { removeAllTooltips(); },
     'Alt-H': (cm) => {toggleEditorVisibility();},
     'Ctrl-S': (cm)=> {hydraUtils.saveEditorContent(cm)},
+    'Ctrl-K': (cm) => {
+        const detection = hydraColorPicker.detectColorFunction(cm);
+        
+        if (detection.found) {
+            hydraColorPicker.openNativeColorPicker(cm, detection, (r, g, b, detectionInfo) => {
+                const newColorCode = `${r.toFixed(2)}, ${g.toFixed(2)}, ${b.toFixed(2)}`;
+                const startPos = { line: detectionInfo.start.line, ch: detectionInfo.openParenPos };
+                const endPos = { line: detectionInfo.start.line, ch: detectionInfo.closeParenPos };
+                
+                cm.replaceRange(newColorCode, startPos, endPos);
+                evaluateCodeHydra(cm);
+            });
+        } else {
+            console.log('Place your cursor in a .color() function to use the color picker');
+        }
+    }
   });
 
   editor.setOption('hintOptions', {
     hint: (cm) => {
       return hydraAutocomplete.hint(cm, CodeMirror);
-    }
+    },
+    completeSingle: true,
+ 
   });
+
 
   window.addEventListener('beforeunload', () => {
     saveContent();

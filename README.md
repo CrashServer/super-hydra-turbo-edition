@@ -20,6 +20,7 @@
 - **Tooltip documentation** for all Hydra functions
 - **Multiple themes**
 - **Customizable fonts** and sizes
+- **Color picker for .color()** 
 
 ### 🎭 **Live Performance Tools**
 - **Increment/decrement values** for VJ-style control (Alt+↑/↓)
@@ -61,6 +62,7 @@ npm run dev
 | `Alt+X` | Toggle comment |
 | `Ctrl+S` | Save code |
 | `Escape` | Close panels/tooltips |
+| `Ctrl+K` | Open color picker in .color() function |
 
 ## 🎛️ Interface Overview
 

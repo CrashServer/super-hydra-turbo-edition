@@ -1,0 +1,127 @@
+.CodeMirror {
+  height: 100vh;
+  background-color: transparent !important;
+  border: none;
+}
+
+.CodeMirror-hints {
+  background: var(--bg-col-2);
+  border: 1px solid var(--border-col-2);
+  font-family: inherit;
+  padding: 2px;
+  font-size: inherit;
+  z-index: 40;
+}
+.CodeMirror-hint {
+  color: var(--text-col-1);
+  padding: 4px 8px;
+}
+.CodeMirror-hint-active {
+  background: var(--col-blue);
+}
+
+
+.CodeMirror-cursor {
+  border-left: 4px solid #fff;
+  border-right: 4px solid black;
+}
+
+.CodeMirror span {
+  background-color: rgba(0, 0, 0, 0.9);
+}
+
+.CodeMirror-selectedtext {
+  color: black !important;
+  background-color: rgba(255, 255, 255, 0.6) !important; 
+}
+
+.CodeMirror-activeline-background {
+  background-color: rgba(0, 222, 0, 0.7) !important;
+  width: 3px;
+} 
+
+.CodeMirror-matchingbracket {
+  color: var(--col-green) !important; 
+  background-color: rgb(158, 206, 106, 0.8); 
+  font-weight: bold;
+  border-bottom: 1px solid var(--col-blue);
+}
+
+.CodeMirror-nonmatchingbracket {
+  color: var(--col-red) !important; 
+  background-color: rgba(255, 0, 0, 0.2); 
+  font-weight: bold;
+}
+
+
+.CodeMirror-tooltip {
+  position: absolute;
+  background-color: var(--bg-col-2);
+  white-space: pre;
+  color: var(--text-col-1);
+  border: 1px solid var(--border-col-2);
+  border-radius: 4px;
+  padding: 0.2rem;
+  font-size: inherit;
+  font-family: inherit;
+  z-index: 1000;
+}
+
+.CodeMirror-code::selection {
+  background-color: rgba(122, 162, 247, 1) !important;
+  color: var(--text-col-1);
+}
+
+/* Styles pour les séparateurs d'autocomplétion */
+.CodeMirror-hints .autocomplete-separator {
+  background: linear-gradient(45deg, #2C5AA0, #4A90C2); 
+  color: #E8F4FD ;
+  font-weight: bold ;
+  text-align: center ;
+  font-size: 11px ;
+  text-transform: uppercase ;
+  letter-spacing: 1px ;
+  cursor: default ;
+  pointer-events: none ;
+  border-top: 1px solid #6BBFDF ;
+  border-bottom: 1px solid #6BBFDF ;
+  margin: 2px 0 ;
+  padding: 4px 8px ;
+
+  -webkit-user-select: none ;
+  -moz-user-select: none ;
+  user-select: none ;
+  outline: none ;
+  
+  /* Masquer du focus clavier */
+  display: block ;
+  visibility: visible ;
+}
+
+
+.CodeMirror-hints .autocomplete-separator .separator-text {
+  display: block;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+}
+
+/* Style for real suggestion */
+.CodeMirror-hints li:not(.autocomplete-separator) {
+  background: rgba(15, 20, 25, 0.9);
+  color: #E8F4FD;
+  border-left: 3px solid transparent;
+  transition: all 0.2s ease;
+}
+
+.CodeMirror-hints li:not(.autocomplete-separator):hover,
+.CodeMirror-hints .CodeMirror-hint-active:not(.autocomplete-separator) {
+  background: linear-gradient(90deg, rgba(74, 144, 194, 0.2), rgba(107, 191, 223, 0.1)) ;
+  border-left: 3px solid #6BBFDF ;
+  color: #6BBFDF ;
+}
+
+.CodeMirror-hints .autocomplete-separator {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}

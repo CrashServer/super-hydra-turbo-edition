@@ -13,7 +13,8 @@ export const configPanel = {
         { key: 'Alt+I', description: 'Show definition' },
         { key: 'Alt+H', description: 'Hide/Show code' },
         { key: 'Ctrl+S', description: 'Save Code' },
-        { key: 'Escape', description: 'Close tooltips/panel' }
+        { key: 'Escape', description: 'Close tooltips/panel' },
+        { key: 'Ctrl+K', description: 'Open color picker in .color()' }
     ],
 
     init: function(editor) {

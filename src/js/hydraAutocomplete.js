@@ -8,6 +8,8 @@ export const hydraAutocomplete = {
       { text: 'gradient(0)', displayText: 'gradient' },
       { text: 'solid(1,1,1,1)', displayText: 'solid' },
       { text: 'src(o0)', displayText: 'src' },
+    ],
+    noise: [
       // lib-noise sources
       { text: 'whitenoise(10.0,0.0)', displayText: 'whitenoise' },
       { text: 'colornoise(10.0,0.0)', displayText: 'colornoise' },
@@ -17,6 +19,8 @@ export const hydraAutocomplete = {
       { text: 'warp(10.0,0.1,2.0,3.0,1.0)', displayText: 'warp' },
       { text: 'cwarp(10.0,0.1,2.0,3.0,1.0,0.5)', displayText: 'cwarp' },
       { text: 'ncontour(0.5,0.1,3,5.0,0.5,2.0)', displayText: 'ncontour' },
+    ],
+    art: [
       // op-art patterns sources (lib-pattern)
       { text: 'brick(0.25,0.08,0.01)', displayText: 'brick' },
       { text: 'checker(10.0)', displayText: 'checker' },
@@ -27,6 +31,8 @@ export const hydraAutocomplete = {
       { text: 'pulsetrain(3.0,0.5,0.05,0.001)', displayText: 'pulsetrain' },
       { text: 'spiral(1.0,5.0,0.1)', displayText: 'spiral' },
       { text: 'wave(0.0,10.0,3.0,0.025)', displayText: 'wave' },
+    ],
+    pattern: [
       // Soft patterns sources (lib-softpattern)
       { text: 'blinking(5.0,5.0,0.5,0.03)', displayText: 'blinking' },
       { text: 'blobs(0.1,0.2,0.05)', displayText: 'blobs' },
@@ -140,6 +146,28 @@ export const hydraAutocomplete = {
       { text: 'fit(0,1)', displayText: 'fit' },
     ],
     
+    // Separators for better organization
+    createSeparator: function(text) {
+        return {
+            text: "", 
+            displayText: text,
+            className: "autocomplete-separator",
+            render: function(element, self, data) {
+                element.className += " autocomplete-separator";
+                element.innerHTML = `<span class="separator-text">${data.displayText}</span>`;
+                element.style.pointerEvents = 'none';
+                element.style.cursor = 'default';
+                element.setAttribute('data-separator', 'true');
+                element.setAttribute('aria-disabled', 'true');
+            },
+            hint: function() {
+                return false;
+            },
+            disabled: true,
+            separator: true
+        };
+    },
+
     hint: function(cm, CodeMirror) {
         const cursor = cm.getCursor();
         const line = cm.getLine(cursor.line);
@@ -148,37 +176,51 @@ export const hydraAutocomplete = {
         const cursorPosition = cursor.ch;
         
         const allSuggestions = [
-            ...[{text:"", displayText: "--Sources--"}],
+            this.createSeparator("🔥 Sources"),
             ...this.sources,
-            ...[{text:"", displayText: "--InitSources--"}],
+            this.createSeparator("🌊 Noise Functions"),
+            ...this.noise,
+            this.createSeparator("🎨 Art Patterns"),
+            ...this.art,
+            this.createSeparator("✨ Soft Patterns"),
+            ...this.pattern,
+            this.createSeparator("📺 Init Sources"),
             ...this.initSources,
-            ...[{text:"", displayText: "--Transfo--"}],
+            this.createSeparator("🔄 Transformations"),
             ...this.transformations,
-            ...[{text:"", displayText: "--Effects--"}],
+            this.createSeparator("⚡ Effects"),
             ...this.effects,
-            ...[{text:"", displayText: "--Utilities--"}],
+            this.createSeparator("🛠️ Utilities"),
             ...this.utilities,
-            ...[{text:"", displayText: "--Math&Misc--"}],
+            this.createSeparator("🧮 Math & Audio"),
             ...this.mathFunctions
         ];
 
         const blankSuggestions = [
-            ...[{text:"", displayText: "--Sources--"}],
+            this.createSeparator("🔥 Sources"),
             ...this.sources,
-            ...[{text:"", displayText: "--InitSources--"}],
+            this.createSeparator("🌊 Noise Functions"),
+            ...this.noise,
+            this.createSeparator("🎨 Art Patterns"),
+            ...this.art,
+            this.createSeparator("✨ Soft Patterns"),
+            ...this.pattern,
+            this.createSeparator("📺 Init Sources"),
             ...this.initSources,
-            ...[{text:"", displayText: "--Utilities--"}],
+            this.createSeparator("🛠️ Utilities"),
             ...this.utilities,
-          ]
+        ];
       
         if (beforeCursor.trim() === '') {
-            const suggestions = blankSuggestions.filter(
-                item => item.displayText.startsWith(token.string)
-            );
+            const suggestions = blankSuggestions.filter(item => {
+                if (item.className === "autocomplete-separator") return true;
+                return item.displayText.includes(token.string);
+            });
+            
             return {
-            list: suggestions,
-            from: CodeMirror.Pos(cursor.line, beforeCursor.lastIndexOf('(') + 1),
-            to: CodeMirror.Pos(cursor.line, cursor.ch)
+                list: suggestions,
+                from: CodeMirror.Pos(cursor.line, beforeCursor.lastIndexOf('(') + 1),
+                to: CodeMirror.Pos(cursor.line, cursor.ch)
             };
         }
       
@@ -186,13 +228,14 @@ export const hydraAutocomplete = {
         if (/\]\s*\.\s*\w*$/.test(beforeCursor)) {
             const prefix = token.string.slice(0, cursorPosition - token.start).replace(/[^a-zA-Z]/g, "");
             const dotIndex = beforeCursor.lastIndexOf('.');
-            const suggestions = this.arrayMethods.filter(
-                item => item.displayText.startsWith(prefix)
-            );
+            const suggestions = [
+                this.createSeparator("🔗 Array Methods"),
+                ...this.arrayMethods.filter(item => item.displayText.includes(prefix))
+            ];
             return {
-            list: suggestions,
-            from: CodeMirror.Pos(cursor.line, dotIndex + 1),
-            to: CodeMirror.Pos(cursor.line, cursor.ch)
+                list: suggestions,
+                from: CodeMirror.Pos(cursor.line, dotIndex + 1),
+                to: CodeMirror.Pos(cursor.line, cursor.ch)
             };
         }
       
@@ -200,20 +243,33 @@ export const hydraAutocomplete = {
         if (/\.\s*\w*$/.test(beforeCursor)) {
             const prefix = token.string.slice(0, cursorPosition - token.start).replace(/[^a-zA-Z]/g, "");
             const dotIndex = beforeCursor.lastIndexOf('.');
-            const suggestions = [...this.transformations, ...this.effects].filter(
-                item => item.displayText.startsWith(prefix)
-            );
+            
+            const transformSuggestions = this.transformations.filter(item => item.displayText.includes(prefix));
+            const effectSuggestions = this.effects.filter(item => item.displayText.includes(prefix));
+            
+            const suggestions = [];
+            if (transformSuggestions.length > 0) {
+                suggestions.push(this.createSeparator("🔄 Transformations"));
+                suggestions.push(...transformSuggestions);
+            }
+            if (effectSuggestions.length > 0) {
+                suggestions.push(this.createSeparator("⚡ Effects"));
+                suggestions.push(...effectSuggestions);
+            }
+            
             return {
-            list: suggestions,
-            from: CodeMirror.Pos(cursor.line, dotIndex + 1),
-            to: CodeMirror.Pos(cursor.line, cursor.ch)
+                list: suggestions,
+                from: CodeMirror.Pos(cursor.line, dotIndex + 1),
+                to: CodeMirror.Pos(cursor.line, cursor.ch)
             };
         }
       
         const prefix = token.string.slice(0, cursorPosition - token.start).replace(/[^a-zA-Z]/g, "");
-        const suggestions = (prefix !== '') ? allSuggestions.filter(
-            item => item.displayText.startsWith(prefix)
-        ) : allSuggestions;
+        const suggestions = (prefix !== '') ? allSuggestions.filter(item => {
+            // if (item.className === "autocomplete-separator") return true;
+            return item.displayText.includes(prefix);
+        }) : allSuggestions;
+        
         return {
           list: suggestions,
           from: CodeMirror.Pos(cursor.line, cursor.ch - prefix.length),
