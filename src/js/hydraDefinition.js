@@ -115,11 +115,48 @@ const mathFunctions = {
   'Math.PI': 'Math.PI\nConstant π (3.14159...)',
 };
 
+const colorEffects = {
+  // Sepia filter
+  sepia: 'sepia(amount)\nApplies sepia tone effect. \namount: sepia intensity (default: 1.0)',
+  
+  // Color level reduction
+  levels: 'levels(levels, amount)\nReduces color levels while preserving light-dark dynamics. \nlevels: number of color levels (default: 3.0) \namount: effect intensity (default: 1.0)',
+  monotone: 'monotone(levels, hue, amount)\nCreates monotone effect with specified hue. \nlevels: number of levels (default: 3.0) \nhue: color hue 0-1 (default: 0.6) \namount: effect intensity (default: 1.0)',
+  
+  // HSV manipulation
+  hsvshift: 'hsvshift(hue, saturation, value)\nShifts HSV color values. \nhue: hue shift 0-1 (default: 0.0) \nsaturation: saturation multiplier (default: 1.0) \nvalue: brightness multiplier (default: 1.0)',
+  
+  // Color gradients
+  grarose: 'grarose(amount)\nApplies rose gradient to grayscale conversion. \namount: gradient intensity (default: 1.0)',
+  grawave: 'grawave(amount)\nApplies wave gradient creating color bands. \namount: gradient intensity (default: 1.0)',
+  
+  // Vector math color effects
+  colcross: 'colcross(amount)\nApplies RGB cross product for strong color effects. \namount: effect intensity (default: 1.0)',
+  coldot: 'coldot(amount)\nApplies RGB dot product of rotated channels. \namount: effect intensity (default: 1.0)',
+  colboost: 'colboost(amount)\nBoosts colors using vector operations. \namount: boost intensity (default: 1.0)',
+  colreflect: 'colreflect(amount)\nCreates color reflection effect. \namount: reflection intensity (default: 1.0)',
+};
+
+const fractalEffects = {
+  // Mirroring functions
+  mirrorX: 'mirrorX(pos, coverage)\nMirrors image horizontally from position. \npos: mirror position (default: 0) \ncoverage: effect coverage (default: 1) \nResult: [1234|4321]',
+  mirrorY: 'mirrorY(pos, coverage)\nMirrors image vertically from position. \npos: mirror position (default: 0) \ncoverage: effect coverage (default: 1) \nSame as mirrorX but on Y axis',
+  mirrorX2: 'mirrorX2(pos, coverage)\nMirrors image horizontally from other side. \npos: mirror position (default: 0) \ncoverage: effect coverage (default: 1) \nResult: [8765|5678]',
+  mirrorY2: 'mirrorY2(pos, coverage)\nMirrors image vertically from other side. \npos: mirror position (default: 0) \ncoverage: effect coverage (default: 1) \nSame as mirrorX2 but on Y axis',
+  mirrorWrap: 'mirrorWrap()\nMirrors any out of bounds coordinates. \nInput: [-8,-7,-6,-5,-4,-3,-2,-1] [1,2,3,4,5,6,7,8] [9,10,11,12,13,14,15,16] \nResult: [87654321] [12345678] [87654321]',
+  
+  // Other fractal functions
+  inversion: 'inversion()\nApplies circular inversion transformation. \nUseful for creating fractal-like patterns.',
+};
+
+// Mise à jour de l'objet definitions pour inclure les nouveaux effets fractales
 const definitions = { 
   ...sources, 
   ...initSources, 
   ...transformations, 
   ...effects, 
+  ...colorEffects,
+  ...fractalEffects,  // Ajout des nouveaux effets fractales
   ...utilities, 
   ...arrayMethods, 
   ...mathFunctions 

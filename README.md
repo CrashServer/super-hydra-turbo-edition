@@ -85,8 +85,8 @@ npm run dev
 - **[Hydra Synth](https://hydra.ojack.xyz/)** - Live coding video synthesis engine
 - **[CodeMirror](https://codemirror.net/)** - Advanced code editor
 - **[Vite](https://vitejs.dev/)** - Fast build tool
-- **[Extra shader](https://gitlab.com/metagrowing/extra-shaders-for-hydra)** - Community shaders and patterns
-
+- **[Extra shader](https://gitlab.com/metagrowing/extra-shaders-for-hydra)** - Extra Shaders 
+- **[Geikha functions](https://github.com/geikha/hyper-hydra)** - Additional patterns and functions
 
 
 ## 📄 License
@@ -96,7 +96,8 @@ This project is open source and available under the [MIT License](LICENSE).
 ## 🙏 Credits
 
 - **Olivia Jack** - Creator of Hydra Synth
-- **Thomas Jourdan** - Additional patterns and functions
+- **Thomas Jourdan** - Additional shaders
+- **Geikha** - Hyper Hydra functions
 - **CodeMirror Team** - Editor component
 - **Contributors** - Bug fixes and enhancements
 - **CrashServer** - Project maintainer

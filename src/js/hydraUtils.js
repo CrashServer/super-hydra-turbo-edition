@@ -28,15 +28,24 @@ export const hydraUtils = {
         });
         eval('setResolution(canvas.clientWidth, canvas.clientHeight)');
         eval('a.show()');
-        const script = document.createElement('script');
-        script.src = 'src/js/hydra_extra_shader.js'; 
-            script.onload = () => {
+        const shader = document.createElement('script');
+        shader.src = 'src/js/hydra_extra_shader.js'; 
+            shader.onload = () => {
             console.log('Shader definitions loaded');
             };
-        script.onerror = () => {
-            console.error('Erreur lors du chargement du shader externe');
+        shader.onerror = () => {
+            console.error('Error loading shader library');
             };
-        document.head.appendChild(script);
+        document.head.appendChild(shader);
+        const fractal = document.createElement('script');
+        fractal.src = 'src/js/hydraFractal.js'; 
+            fractal.onload = () => {
+            console.log('Fractal definitions loaded');
+            };
+        fractal.onerror = () => {
+            console.error('Error loading fractal library');
+            };
+        document.head.appendChild(fractal);
     },
 
     getBlock: function(cm, lineNumber) {

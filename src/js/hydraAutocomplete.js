@@ -102,6 +102,42 @@ export const hydraAutocomplete = {
       { text: 'scrollY(0.5,0)', displayText: 'scrollY' },
     ],
     
+    // Color Effects
+    colorEffects: [
+      // Sepia filter
+      { text: 'sepia(1.0)', displayText: 'sepia' },
+      
+      // Color level reduction
+      { text: 'levels(3.0,1.0)', displayText: 'levels' },
+      { text: 'monotone(3.0,0.6,1.0)', displayText: 'monotone' },
+      
+      // HSV manipulation
+      { text: 'hsvshift(0.0,1.0,1.0)', displayText: 'hsvshift' },
+      
+      // Color gradients
+      { text: 'grarose(1.0)', displayText: 'grarose' },
+      { text: 'grawave(1.0)', displayText: 'grawave' },
+      
+      // Vector math color effects
+      { text: 'colcross(1.0)', displayText: 'colcross' },
+      { text: 'coldot(1.0)', displayText: 'coldot' },
+      { text: 'colboost(1.0)', displayText: 'colboost' },
+      { text: 'colreflect(1.0)', displayText: 'colreflect' },
+    ],
+
+    // Fractal Effects
+    fractalEffects: [
+      // Mirroring functions
+      { text: 'mirrorX(0,1)', displayText: 'mirrorX' },
+      { text: 'mirrorY(0,1)', displayText: 'mirrorY' },
+      { text: 'mirrorX2(0,1)', displayText: 'mirrorX2' },
+      { text: 'mirrorY2(0,1)', displayText: 'mirrorY2' },
+      { text: 'mirrorWrap()', displayText: 'mirrorWrap' },
+      
+      // Other fractal functions
+      { text: 'inversion()', displayText: 'inversion' },
+    ],
+
     // Utilities functions
     utilities: [
       { text: 'render(o0)', displayText: 'render' },
@@ -190,6 +226,10 @@ export const hydraAutocomplete = {
             ...this.transformations,
             this.createSeparator("⚡ Effects"),
             ...this.effects,
+            this.createSeparator("🌈 Color Effects"),
+            ...this.colorEffects,
+            this.createSeparator("🪞 Fractal Effects"),
+            ...this.fractalEffects,
             this.createSeparator("🛠️ Utilities"),
             ...this.utilities,
             this.createSeparator("🧮 Math & Audio"),
@@ -246,6 +286,8 @@ export const hydraAutocomplete = {
             
             const transformSuggestions = this.transformations.filter(item => item.displayText.includes(prefix));
             const effectSuggestions = this.effects.filter(item => item.displayText.includes(prefix));
+            const colorEffectSuggestions = this.colorEffects.filter(item => item.displayText.includes(prefix));
+            const fractalEffectSuggestions = this.fractalEffects.filter(item => item.displayText.includes(prefix));
             
             const suggestions = [];
             if (transformSuggestions.length > 0) {
@@ -255,6 +297,14 @@ export const hydraAutocomplete = {
             if (effectSuggestions.length > 0) {
                 suggestions.push(this.createSeparator("⚡ Effects"));
                 suggestions.push(...effectSuggestions);
+            }
+            if (colorEffectSuggestions.length > 0) {
+                suggestions.push(this.createSeparator("🌈 Color Effects"));
+                suggestions.push(...colorEffectSuggestions);
+            }
+            if (fractalEffectSuggestions.length > 0) {
+                suggestions.push(this.createSeparator("🪞 Fractal Effects"));
+                suggestions.push(...fractalEffectSuggestions);
             }
             
             return {
