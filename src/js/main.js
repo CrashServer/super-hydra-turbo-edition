@@ -60,6 +60,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   configPanel.init(editor);
 
+  // Evaluate the code block, flash it, and save the content
   function evaluateCodeHydra(cm){
     var {startLine,endLine} = hydraUtils.getBlock(cm, cm.getCursor().line);
     const blockCode = cm.getRange({line: startLine, ch: 0}, {line: endLine, ch: cm.getLine(endLine).length});
@@ -68,6 +69,7 @@ document.addEventListener('DOMContentLoaded', () => {
     saveContent();
   }
   
+  // Flash the code block
   function flashCode(lineStart, lineEnd) {
     for (let i = lineStart; i <= lineEnd; i++) {
       const mark = editor.markText(
@@ -79,11 +81,30 @@ document.addEventListener('DOMContentLoaded', () => {
       }
   }
 
+  // Toggle the visibility of the editor
   function toggleEditorVisibility() {
     console.log("Toggling editor visibility");
     const editorElement = document.getElementById('editor');
     editorElement.classList.toggle('hideEditor');
   }
+
+  // Open the color picker and replace the color code
+  function selectColor(cm) {
+    const detection = hydraColorPicker.detectColorFunction(cm);
+        
+        if (detection.found) {
+            hydraColorPicker.openNativeColorPicker(cm, detection, (r, g, b, detectionInfo) => {
+                const newColorCode = `${r.toFixed(2)}, ${g.toFixed(2)}, ${b.toFixed(2)}`;
+                const startPos = { line: detectionInfo.start.line, ch: detectionInfo.openParenPos };
+                const endPos = { line: detectionInfo.start.line, ch: detectionInfo.closeParenPos };
+                
+                cm.replaceRange(newColorCode, startPos, endPos);
+                evaluateCodeHydra(cm);
+            });
+        } else {
+            console.log('Place your cursor in a .color() function to use the color picker');
+        }
+  } 
 
   // key mapping
   editor.addKeyMap({
@@ -105,22 +126,11 @@ document.addEventListener('DOMContentLoaded', () => {
     'Esc': () => { removeAllTooltips(); },
     'Alt-H': (cm) => {toggleEditorVisibility();},
     'Ctrl-S': (cm)=> {hydraUtils.saveEditorContent(cm)},
-    'Ctrl-K': (cm) => {
-        const detection = hydraColorPicker.detectColorFunction(cm);
-        
-        if (detection.found) {
-            hydraColorPicker.openNativeColorPicker(cm, detection, (r, g, b, detectionInfo) => {
-                const newColorCode = `${r.toFixed(2)}, ${g.toFixed(2)}, ${b.toFixed(2)}`;
-                const startPos = { line: detectionInfo.start.line, ch: detectionInfo.openParenPos };
-                const endPos = { line: detectionInfo.start.line, ch: detectionInfo.closeParenPos };
-                
-                cm.replaceRange(newColorCode, startPos, endPos);
-                evaluateCodeHydra(cm);
-            });
-        } else {
-            console.log('Place your cursor in a .color() function to use the color picker');
-        }
-    }
+    'Ctrl-K': (cm) => { selectColor(cm); },
+    'Alt-1': () => { hydraUtils.evaluateCode('render(o0)')},
+    'Alt-2': () => { hydraUtils.evaluateCode('render(o1)')},
+    'Alt-3': () => { hydraUtils.evaluateCode('render(o2)')},
+    'Alt-4': () => { hydraUtils.evaluateCode('render(o3)')},
   });
 
   editor.setOption('hintOptions', {

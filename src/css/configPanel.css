@@ -1,11 +1,20 @@
+:root {
+  --border-radius: 0.5rem;
+  --col-blue: #2C5AA0;
+  --col-blue-light: #4A90C2;
+  --col-blue-dark: #1E3A6F;
+  --col-dark: #0F2147;
+  --col-white: #E8F4FD;
+}
+
 /* Street Fighter Style */
 .config-toggle {
   position: fixed;
-  bottom: 3rem;
+  bottom: 4rem;
   right: 20px;
   width: 60px;
   height: 60px;
-  background: linear-gradient(45deg, #2C5AA0, #1E3A6F, #0F2147);
+  /* background: linear-gradient(45deg, var(--col-blue), var(--col-blue-dark), var(--col-dark)); */
   border-radius: 15px;
   display: flex;
   align-items: center;
@@ -13,7 +22,7 @@
   cursor: pointer;
   z-index: 100;
   transition: all 0.3s ease;
-  border: 3px solid #4A90C2;
+  border: 2px solid var(--col-blue-light);
   box-shadow: 
     0 0 20px rgba(74, 144, 194, 0.4),
     inset 0 0 20px rgba(255, 255, 255, 0.1);
@@ -36,23 +45,19 @@
 .config-toggle span {
   font-size: 24px;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
-  filter: drop-shadow(0 0 5px #4A90C2);
-  color: #E8F4FD;
+  filter: drop-shadow(0 0 5px var(--col-blue-light));
+  color: var(--col-white);
 }
 
 .config-panel {
   position: fixed;
   top: 0;
   right: -400px;
-  width: 400px;
+  width: 300px;
   height: 100vh;
-  background: linear-gradient(135deg, 
-    #0F1419 0%, 
-    #1a1b26 25%, 
-    #24283b 50%, 
-    #1a1b26 75%, 
-    #0F1419 100%);
-  border-left: 4px solid #4A90C2;
+  background: rgba(0, 0, 0, 0.3);
+   backdrop-filter: blur(10px);
+  border-left: 2px solid var(--col-blue-light);
   z-index: 200;
   transition: right 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
   overflow-y: auto;
@@ -69,9 +74,15 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 20px;
-  background: linear-gradient(45deg, #2C5AA0, #4A90C2, #2C5AA0);
-  border-bottom: 3px solid #E8F4FD;
+  padding: 1rem;
+  /* background: linear-gradient(45deg, var(--col-blue), var(--col-blue-light), var(--col-blue)); */
+  background: linear-gradient(135deg, 
+    #0F1419 0%, 
+    #1a1b26 25%, 
+    #24283b 50%, 
+    #1a1b26 75%, 
+    #0F1419 100%);
+  border-bottom: 3px solid var(--col-blue);
   position: relative;
   overflow: hidden;
 }
@@ -106,8 +117,8 @@
   color: #fff;
   font-size: 20px;
   cursor: pointer;
-  width: 35px;
-  height: 35px;
+  width: 2rem;
+  height: 2rem;
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -126,11 +137,17 @@
 }
 
 .config-section {
-  margin-bottom: 25px;
-  background: rgba(74, 144, 194, 0.08);
-  border: 2px solid transparent;
-  border-radius: 10px;
-  padding: 15px;
+  margin-bottom: 0.5rem;
+  background: linear-gradient(135deg, 
+    #0F1419 0%, 
+    #1a1b26 25%, 
+    #24283b 50%, 
+    #1a1b26 75%, 
+    #0F1419 100%);
+  /* background: rgba(74, 144, 194, 0.08); */
+  border: 1px solid transparent;
+  border-radius: var(--border-radius);
+  padding: 0.5rem;
   position: relative;
   background-clip: padding-box;
 }
@@ -142,7 +159,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  border-radius: 10px;
+  border-radius: var(--border-radius);
   padding: 2px;
   background: linear-gradient(45deg, #4A90C2, #6BBFDF, #4A90C2);
   -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
@@ -154,8 +171,8 @@
 
 .config-section label {
   display: block;
-  margin-bottom: 10px;
-  color: #6BBFDF;
+  margin-bottom: 0.5rem;
+  color: var(--col-blue-light);
   font-weight: bold;
   font-size: 14px;
   text-transform: uppercase;
@@ -166,10 +183,10 @@
 .config-section select,
 .config-section input[type="range"] {
   width: 100%;
-  padding: 10px;
+  padding: 0.25rem;
   background: linear-gradient(135deg, #1a1b26, #24283b);
-  border: 2px solid #4A90C2;
-  border-radius: 8px;
+  border: 2px solid var(--col-blue-light);
+  border-radius: var(--border-radius);
   color: #E8F4FD;
   font-weight: bold;
   transition: all 0.3s ease;
@@ -187,14 +204,14 @@
 .config-section select:focus,
 .config-section input[type="range"]:focus {
   outline: none;
-  border-color: #6BBFDF;
+  border-color: var(--col-blue-light);
   box-shadow: 0 0 15px rgba(107, 191, 223, 0.4);
 }
 
 .config-section input[type="range"] {
   -webkit-appearance: none;
-  height: 8px;
-  background: linear-gradient(90deg, #2C5AA0, #4A90C2);
+  height: 4px;
+  background: linear-gradient(90deg, var(--col-blue), var(--col-blue-light));
   border-radius: 5px;
 }
 
@@ -203,42 +220,43 @@
   width: 20px;
   height: 20px;
   border-radius: 50%;
-  background: linear-gradient(45deg, #E8F4FD, #6BBFDF);
-  border: 2px solid #2C5AA0;
+  background: linear-gradient(45deg, var(--col-white), var(--col-blue-light));
+  border: 2px solid var(--col-blue);
   cursor: pointer;
   box-shadow: 0 0 10px rgba(44, 90, 160, 0.6);
 }
 
 .config-section span {
-  color: #6BBFDF;
+  color: var(--col-white);
   font-size: 12px;
   font-weight: bold;
-  margin-left: 10px;
+  margin-left: 0.5rem;
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
 }
 
 .config-section h4 {
-  color: #6BBFDF;
-  margin-bottom: 15px;
+  color: var(--col-blue-light);
+  margin-bottom: 0.5rem;
   font-size: 16px;
   text-transform: uppercase;
   letter-spacing: 1px;
-  border-bottom: 3px solid #4A90C2;
-  padding-bottom: 8px;
+  border-bottom: 3px solid var(--col-blue-light);
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
 }
 
 #shortcuts-list {
-  max-height: 300px;
+  max-height: 350px;
   overflow-y: auto;
-  border: 3px solid #4A90C2;
+  overflow-x: hidden;
+  border: 3px solid var(--col-blue-light);
   border-radius: 10px;
-  padding: 15px;
+  padding: 0;
   background: linear-gradient(135deg, #0f1419, #1a1b26);
   box-shadow: inset 0 0 20px rgba(74, 144, 194, 0.1);
 }
 
 .shortcut-item {
+  width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -275,17 +293,25 @@
   font-weight: bold;
   text-align: right;
   flex: 1;
-  margin-left: 15px;
+  margin-left: 0.5rem;
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+  word-wrap: break-word;
+  padding-right: 0.5rem;
+}
+
+.btn-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
 }
 
 .btn {
   width: 100%;
-  padding: 15px;
+  padding: 0.5rem;
   background: linear-gradient(45deg, #2C5AA0, #4A90C2, #2C5AA0);
   color: #E8F4FD;
   border: 3px solid #6BBFDF;
-  border-radius: 25px;
+  border-radius: var(--border-radius);
   cursor: pointer;
   font-weight: bold;
   font-size: 16px;

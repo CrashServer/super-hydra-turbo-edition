@@ -30,31 +30,32 @@ export const hydraUtils = {
         eval('setResolution(canvas.clientWidth, canvas.clientHeight)');
         eval('a.show()');
         
-        // Charger les extensions après l'initialisation d'Hydra
+        // load Hydra extensions after setup
         this.loadHydraExtensions();
     },
 
-    // Charger dynamiquement les extensions Hydra avec import()
+    // load Hydra extensions dynamically
     async loadHydraExtensions() {
         if (this.extensionsLoaded) return;
         
         try {
             console.log('🔄 Loading Hydra extensions...');
             
-            // Charger hydra_extra_shader avec import dynamique
             await import('./hydra_extra_shader.js');
             console.log('✅ Hydra Extra Shaders loaded');
             
-            // Charger hydraFractal avec import dynamique
             await import('./hydraFractal.js');
             console.log('✅ Hydra Fractals loaded');
             
+            await import('./antlia-math.js');
+            console.log('✅ Hydra Antlia Math loaded');
+
+            await import('./antlia-shape.js');
+            console.log('✅ Hydra Antlia Shapes loaded');
+
             this.extensionsLoaded = true;
             console.log('🎉 All Hydra extensions loaded successfully!');
-            
-            // Déclencher un événement personnalisé
-            window.dispatchEvent(new CustomEvent('hydraExtensionsLoaded'));
-            
+                        
         } catch (error) {
             console.error('❌ Error loading Hydra extensions:', error);
         }
