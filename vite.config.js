@@ -1,6 +1,8 @@
 import { defineConfig } from 'vite';
 
-export default defineConfig({ 
+export default defineConfig({
+    base: 'apps/super-hydra-turbo-edition',
+    
     define: {
         global: 'globalThis',
     },
@@ -13,5 +15,9 @@ export default defineConfig({
         },
         port: 3000,
         host: '0.0.0.0'
+        },
+    build: {
+        rollupOptions: {
         }
+    }
 });

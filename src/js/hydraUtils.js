@@ -3,6 +3,7 @@ import Hydra from 'hydra-synth';
 export const hydraUtils = {
     hydra: null,
     isInitialized: false,
+    extensionsLoaded: false,
 
     init: function() {
         if (this.isInitialized) return;
@@ -28,24 +29,35 @@ export const hydraUtils = {
         });
         eval('setResolution(canvas.clientWidth, canvas.clientHeight)');
         eval('a.show()');
-        const shader = document.createElement('script');
-        shader.src = 'src/js/hydra_extra_shader.js'; 
-            shader.onload = () => {
-            console.log('Shader definitions loaded');
-            };
-        shader.onerror = () => {
-            console.error('Error loading shader library');
-            };
-        document.head.appendChild(shader);
-        const fractal = document.createElement('script');
-        fractal.src = 'src/js/hydraFractal.js'; 
-            fractal.onload = () => {
-            console.log('Fractal definitions loaded');
-            };
-        fractal.onerror = () => {
-            console.error('Error loading fractal library');
-            };
-        document.head.appendChild(fractal);
+        
+        // Charger les extensions après l'initialisation d'Hydra
+        this.loadHydraExtensions();
+    },
+
+    // Charger dynamiquement les extensions Hydra avec import()
+    async loadHydraExtensions() {
+        if (this.extensionsLoaded) return;
+        
+        try {
+            console.log('🔄 Loading Hydra extensions...');
+            
+            // Charger hydra_extra_shader avec import dynamique
+            await import('./hydra_extra_shader.js');
+            console.log('✅ Hydra Extra Shaders loaded');
+            
+            // Charger hydraFractal avec import dynamique
+            await import('./hydraFractal.js');
+            console.log('✅ Hydra Fractals loaded');
+            
+            this.extensionsLoaded = true;
+            console.log('🎉 All Hydra extensions loaded successfully!');
+            
+            // Déclencher un événement personnalisé
+            window.dispatchEvent(new CustomEvent('hydraExtensionsLoaded'));
+            
+        } catch (error) {
+            console.error('❌ Error loading Hydra extensions:', error);
+        }
     },
 
     getBlock: function(cm, lineNumber) {
@@ -71,7 +83,6 @@ export const hydraUtils = {
             this.showErrorFlash(error.message);
             console.error("Error evaluating code:", error);
         }
-
     },
 
     showErrorFlash: function(errorMessage) {
