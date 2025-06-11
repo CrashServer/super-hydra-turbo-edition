@@ -41,6 +41,30 @@ export const hydraAutocomplete = {
       { text: 'sdfmove(0.73,1.0,-0.5)', displayText: 'sdfmove' },
       { text: 'smoothsun(0.3,0.2,1.0,0.5)', displayText: 'smoothsun' }
     ],
+    antliaShapes: [
+      // Basic shapes
+      { text: 'circle(0.3,0.007)', displayText: 'circle' },
+      { text: 'square(0.25,0)', displayText: 'square' },
+      { text: 'rectangle(0.3,[1,1],0)', displayText: 'rectangle' },
+      { text: 'triangle(0.3,0.007)', displayText: 'triangle' },
+      
+      // Strips
+      { text: 'horiz(0.3,0.0007)', displayText: 'horiz' },
+      { text: 'vert(0.3,0.0007)', displayText: 'vert' },
+      { text: 'leftdiag(0.3,0.0007)', displayText: 'leftdiag' },
+      { text: 'rightdiag(0.3,0.0007)', displayText: 'rightdiag' },
+      
+      // Quadrants
+      { text: 'firstquad(1,1,1,1)', displayText: 'firstquad' },
+      { text: 'secondquad(1,1,1,1)', displayText: 'secondquad' },
+      { text: 'thirdquad(1,1,1,1)', displayText: 'thirdquad' },
+      { text: 'fourthquad(1,1,1,1)', displayText: 'fourthquad' },
+      { text: 'quad(0,1,1,1,1)', displayText: 'quad' },
+      
+      // Extra shapes
+      { text: 'star(0.3,5,0.007)', displayText: 'star' },
+      { text: 'grid(8,4,0.05,0.001)', displayText: 'grid' },
+    ],
     
     initSources: [
       { text: 's0.initCam()', displayText: 'SrcWebCam' },
@@ -96,7 +120,7 @@ export const hydraAutocomplete = {
       { text: 'repeatX(3,0)', displayText: 'repeatX' },
       { text: 'repeatY(3,0)', displayText: 'repeatY' },
       { text: 'rotate(10,0)', displayText: 'rotate' },
-      { text: 'scale(1.5,1,1,0.5,0.5)', displayText: 'scale' },
+      { text: 'scale(1, screenRatio)', displayText: 'scale' },
       { text: 'scroll(0.5,0.5,0,0)', displayText: 'scroll' },
       { text: 'scrollX(0.5,0)', displayText: 'scrollX' },
       { text: 'scrollY(0.5,0)', displayText: 'scrollY' },
@@ -155,6 +179,9 @@ export const hydraAutocomplete = {
     // Math functions and constants
     mathFunctions: [
       { text: '()=>Math.sin(time)', displayText: 'time' },
+      { text: '()=>sinrange(time, 0,1,1)', displayText: 'sinrange' },
+      { text: '()=>cosrange(time, 0,1)', displayText: 'cosrange' },
+      { text: '()=>sinrange(time, 0,1)', displayText: 'tanrange' },
       { text: '()=>mouse.x', displayText: 'mouse.x' },
       { text: '()=>mouse.y', displayText: 'mouse.y' },
       { text: '()=>a.fft[0]', displayText: 'a0' },
@@ -164,6 +191,8 @@ export const hydraAutocomplete = {
       { text: 'Math.sin()', displayText: 'sin' },
       { text: 'Math.cos()', displayText: 'cos' },
       { text: 'Math.tan()', displayText: 'tan' },
+      { text: 'saw()', displayText: 'saw' },
+      { text: '()=>sawt()', displayText: 'sawt' },
       { text: 'Math.random()', displayText: 'random' },
       { text: 'Math.PI', displayText: 'Math.PI' },
       { text: 'Math.abs()', displayText: 'abs' },
@@ -172,6 +201,7 @@ export const hydraAutocomplete = {
       { text: 'Math.round()', displayText: 'round' },
       { text: 'Math.min()', displayText: 'min' },
       { text: 'Math.max()', displayText: 'max' },
+      { text: 'screenRatio', displayText: 'sr' },
     ],
 
     arrayMethods: [
@@ -220,6 +250,8 @@ export const hydraAutocomplete = {
             ...this.art,
             this.createSeparator("✨ Soft Patterns"),
             ...this.pattern,
+            this.createSeparator("🔷 Antlia Shapes"),
+            ...this.antliaShapes,
             this.createSeparator("📺 Init Sources"),
             ...this.initSources,
             this.createSeparator("🔄 Transformations"),
@@ -245,6 +277,8 @@ export const hydraAutocomplete = {
             ...this.art,
             this.createSeparator("✨ Soft Patterns"),
             ...this.pattern,
+            this.createSeparator("🔷 Antlia Shapes"),
+            ...this.antliaShapes,
             this.createSeparator("📺 Init Sources"),
             ...this.initSources,
             this.createSeparator("🛠️ Utilities"),

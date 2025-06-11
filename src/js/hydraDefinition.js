@@ -106,13 +106,19 @@ const arrayMethods = {
 
 const mathFunctions = {
   time: 'time\nVariable that increments automatically',
+  sinrange: 'sinrange(x, min, max, freq)\nSine wave in a range. \nx: time or value \nmin: minimum value (default: 0)\nmax: maximum value (default: 1)\nfreq: frequency (default: 1)',
+  cosrange: 'cosrange(x, min, max, freq)\nCosine wave in a range. \nx: time or value \nmin: minimum value (default: 0)\nmax: maximum value (default: 1)\nfreq: frequency (default: 1)',
+  tanrange: 'tanrange(x, min, max, freq)\nTangent wave in a range. \nx: time or value \nmin: minimum value (default: 0)\nmax: maximum value (default: 1)\nfreq: frequency (default: 1)',
   mouse: 'mouse\nMouse position (x and y between 0 and 1)',
   'a.fft': 'a.fft[index]\nAccesses audio frequency analysis',
   sin: 'Math.sin(x)\nCalculates sine of x',
   cos: 'Math.cos(x)\nCalculates cosine of x',
-  tan: 'Math.tan(x)\nCalculates tangent of x',
+  tan: 'Math.tan(x, amp=3, freq=1)\nCalculates tangent of x',
+  saw: 'Math.saw(x)\nGenerates sawtooth wave. \nx: time or value',
+  sawt: 'Math.sawt(amp=3, freq=1)\nGenerates sawtooth wave with time. \nx: time or value',
   random: 'Math.random()\nGenerates random number between 0 and 1',
   'Math.PI': 'Math.PI\nConstant π (3.14159...)',
+  screenRatio: 'screenRatio\nAspect ratio of the screen (height/width)',
 };
 
 const colorEffects = {
@@ -149,14 +155,40 @@ const fractalEffects = {
   inversion: 'inversion()\nApplies circular inversion transformation. \nUseful for creating fractal-like patterns.',
 };
 
-// Mise à jour de l'objet definitions pour inclure les nouveaux effets fractales
+const antliaShapes = {
+  // Basic shapes
+  circle: 'circle(s, smooth)\nCreates a circular shape mask.\ns: size (default: 0.3)\nsmooth: edge smoothing (default: 0.007)',
+  square: 'square(s, smooth)\nCreates a square shape mask.\ns: size (default: 0.25)\nsmooth: edge smoothing (default: 0)',
+  rectangle: 'rectangle(s, ratio, smooth)\nCreates a rectangular shape mask.\ns: size (default: 0.3)\nratio: aspect ratio array [width, height] (default: [1,1])\nsmooth: edge smoothing (default: 0)',
+  triangle: 'triangle(s, smooth)\nCreates a triangular shape mask.\ns: size (default: 0.3)\nsmooth: edge smoothing (default: 0.007)',
+  
+  // Strips
+  horiz: 'horiz(s, smooth)\nCreates a horizontal strip.\ns: size (default: 0.3)\nsmooth: edge smoothing (default: 0.0007)',
+  vert: 'vert(s, smooth)\nCreates a vertical strip.\ns: size (default: 0.3)\nsmooth: edge smoothing (default: 0.0007)',
+  leftdiag: 'leftdiag(s, smooth)\nCreates a left diagonal strip.\ns: size (default: 0.3)\nsmooth: edge smoothing (default: 0.0007)',
+  rightdiag: 'rightdiag(s, smooth)\nCreates a right diagonal strip.\ns: size (default: 0.3)\nsmooth: edge smoothing (default: 0.0007)',
+  
+  // Quadrants
+  firstquad: 'firstquad(r, g, b, a)\nCreates a solid color in the first quadrant (top-right).\nr,g,b,a: color components (default: 1,1,1,1)',
+  secondquad: 'secondquad(r, g, b, a)\nCreates a solid color in the second quadrant (top-left).\nr,g,b,a: color components (default: 1,1,1,1)',
+  thirdquad: 'thirdquad(r, g, b, a)\nCreates a solid color in the third quadrant (bottom-left).\nr,g,b,a: color components (default: 1,1,1,1)',
+  fourthquad: 'fourthquad(r, g, b, a)\nCreates a solid color in the fourth quadrant (bottom-right).\nr,g,b,a: color components (default: 1,1,1,1)',
+  quad: 'quad(i, r, g, b, a)\nCreates a solid color in the specified quadrant.\ni: quadrant index (0-3)\nr,g,b,a: color components (default: 1,1,1,1)',
+  
+  // Extra shapes
+  star: 'star(s, v, smooth)\nCreates a star shape.\ns: size (default: 0.3)\nv: number of points (default: 5)\nsmooth: edge smoothing (default: 0.007)',
+  grid: 'grid(x, y, b, smooth)\nCreates a grid pattern.\nx: horizontal divisions (default: 8)\ny: vertical divisions (default: 4)\nb: border thickness (default: 0.05)\nsmooth: edge smoothing (default: 0.001)',
+};
+
+// Mise à jour de l'objet definitions pour inclure les formes Antlia
 const definitions = { 
   ...sources, 
   ...initSources, 
   ...transformations, 
   ...effects, 
   ...colorEffects,
-  ...fractalEffects,  // Ajout des nouveaux effets fractales
+  ...fractalEffects,
+  ...antliaShapes,  // Ajout des formes Antlia
   ...utilities, 
   ...arrayMethods, 
   ...mathFunctions 

@@ -74,7 +74,7 @@
 
 /* Styles pour les séparateurs d'autocomplétion */
 .CodeMirror-hints .autocomplete-separator {
-  background: linear-gradient(45deg, #2C5AA0, #4A90C2); 
+  background: linear-gradient(45deg, var(--col-blue-dark), var(--col-dark)); 
   color: #E8F4FD ;
   font-weight: bold ;
   text-align: center ;

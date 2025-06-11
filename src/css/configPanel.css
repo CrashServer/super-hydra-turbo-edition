@@ -31,6 +31,7 @@
 
 .config-toggle:hover {
   transform: perspective(100px) rotateX(5deg) scale(1.1);
+  background: linear-gradient(45deg, var(--col-blue), var(--col-blue-dark), var(--col-dark));
   box-shadow: 
     0 0 30px rgba(74, 144, 194, 0.6),
     inset 0 0 30px rgba(255, 255, 255, 0.2);

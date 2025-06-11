@@ -108,11 +108,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // key mapping
   editor.addKeyMap({
-    'Ctrl-Enter': function(cm) {
-      evaluateCodeHydra(cm);
-    },
+    'Ctrl-Enter': function(cm) {evaluateCodeHydra(cm);},
+    'Cmd-Enter': function(cm) {evaluateCodeHydra(cm);},
     'Ctrl-Space': 'autocomplete',
+    'Cmd-Space': 'autocomplete', 
     'Ctrl-;': ()=> { hydraUtils.stopHydra(); },
+    'Cmd-;': ()=> { hydraUtils.stopHydra(); }, 
     'Alt-X': (cm) => {cm.toggleComment();},
     'Alt-Up': (cm) => {
                     hydraUtils.incrementValue(cm, 1)
@@ -126,7 +127,9 @@ document.addEventListener('DOMContentLoaded', () => {
     'Esc': () => { removeAllTooltips(); },
     'Alt-H': (cm) => {toggleEditorVisibility();},
     'Ctrl-S': (cm)=> {hydraUtils.saveEditorContent(cm)},
+    'Cmd-S': (cm)=> {hydraUtils.saveEditorContent(cm)}, 
     'Ctrl-K': (cm) => { selectColor(cm); },
+    'Cmd-K': (cm) => { selectColor(cm); }, 
     'Alt-1': () => { hydraUtils.evaluateCode('render(o0)')},
     'Alt-2': () => { hydraUtils.evaluateCode('render(o1)')},
     'Alt-3': () => { hydraUtils.evaluateCode('render(o2)')},
