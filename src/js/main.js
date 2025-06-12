@@ -63,7 +63,23 @@ document.addEventListener('DOMContentLoaded', () => {
   // Evaluate the code block, flash it, and save the content
   function evaluateCodeHydra(cm){
     var {startLine,endLine} = hydraUtils.getBlock(cm, cm.getCursor().line);
-    const blockCode = cm.getRange({line: startLine, ch: 0}, {line: endLine, ch: cm.getLine(endLine).length});
+    let blockCode = cm.getRange({line: startLine, ch: 0}, {line: endLine, ch: cm.getLine(endLine).length});
+
+    // Vérifier si le bloc de code se termine par .out(...)
+    const outRegex = /\.out\s*\(.*\)\s*;?$/m;
+    if (!outRegex.test(blockCode)) {
+      // Ajouter .out() à la fin du bloc de code
+      blockCode = blockCode.trim();
+      blockCode += '.out()'
+
+      // Remplacer le code dans l'éditeur
+      cm.replaceRange(
+        blockCode,
+        { line: startLine, ch: 0 },
+        { line: endLine, ch: cm.getLine(endLine).length }
+      );
+    }
+
     hydraUtils.evaluateCode(blockCode);
     flashCode(startLine, endLine);
     saveContent();

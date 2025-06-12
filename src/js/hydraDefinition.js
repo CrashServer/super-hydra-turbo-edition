@@ -143,6 +143,25 @@ const colorEffects = {
   colreflect: 'colreflect(amount)\nCreates color reflection effect. \namount: reflection intensity (default: 1.0)',
 };
 
+const screenSpaceShaders = {
+  dither: 'dither()\nApplies black and white ordered dithering.',
+  dither2: 'dither2()\nApplies ordered dithering with a 2x2 Bayer matrix for color reduction.',
+  dither4: 'dither4()\nApplies ordered dithering with a 4x4 Bayer matrix to preserve more colors.',
+  ditherrnd: 'ditherrnd()\nApplies black and white random dithering.',
+  ditherrndcolor: 'ditherrndcolor()\nApplies random dithering preserving some colors.',
+  erode: 'erode()\nMorphological erode operator.',
+  dilate: 'dilate()\nMorphological dilate operator.',
+  blur: 'blur()\nApplies a 3x3 Gaussian blur.',
+  blurmore: 'blurmore()\nApplies a 5x5 Gaussian blur.',
+  sharpen: 'sharpen()\nApplies a sharpening filter.',
+  emboss: 'emboss()\nApplies an embossing filter.',
+  edge: 'edge()\nApplies an edge detection filter.',
+  sobelx: 'sobelx()\nApplies a Sobel filter in the X direction.',
+  sobely: 'sobely()\nApplies a Sobel filter in the Y direction.',
+  pxsort: 'pxsort(threshold, frame, dirX, dirY)\nSorts pixels horizontally by brightness.\nthreshold: (default 0.2)\nframe: (default 0)\ndirX: (default 0)\ndirY: (default 1)',
+  pysort: 'pysort(threshold, frame, dirX, dirY)\nSorts pixels vertically by brightness.\nthreshold: (default 0.2)\nframe: (default 0)\ndirX: (default 0)\ndirY: (default 1)',
+};
+
 const fractalEffects = {
   // Mirroring functions
   mirrorX: 'mirrorX(pos, coverage)\nMirrors image horizontally from position. \npos: mirror position (default: 0) \ncoverage: effect coverage (default: 1) \nResult: [1234|4321]',
@@ -180,15 +199,15 @@ const antliaShapes = {
   grid: 'grid(x, y, b, smooth)\nCreates a grid pattern.\nx: horizontal divisions (default: 8)\ny: vertical divisions (default: 4)\nb: border thickness (default: 0.05)\nsmooth: edge smoothing (default: 0.001)',
 };
 
-// Mise à jour de l'objet definitions pour inclure les formes Antlia
 const definitions = { 
   ...sources, 
   ...initSources, 
   ...transformations, 
   ...effects, 
   ...colorEffects,
+  ...screenSpaceShaders,
   ...fractalEffects,
-  ...antliaShapes,  // Ajout des formes Antlia
+  ...antliaShapes,  
   ...utilities, 
   ...arrayMethods, 
   ...mathFunctions 

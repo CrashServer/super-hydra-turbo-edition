@@ -149,6 +149,26 @@ export const hydraAutocomplete = {
       { text: 'colreflect(1.0)', displayText: 'colreflect' },
     ],
 
+     // Screen Space Shaders
+    screenSpaceShaders: [
+      { text: 'dither()', displayText: 'dither' },
+      { text: 'dither2()', displayText: 'dither2' },
+      { text: 'dither4()', displayText: 'dither4' },
+      { text: 'ditherrnd()', displayText: 'ditherrnd' },
+      { text: 'ditherrndcolor()', displayText: 'ditherrndcolor' },
+      { text: 'erode()', displayText: 'erode' },
+      { text: 'dilate()', displayText: 'dilate' },
+      { text: 'blur()', displayText: 'blur' },
+      { text: 'blurmore()', displayText: 'blurmore' },
+      { text: 'sharpen()', displayText: 'sharpen' },
+      { text: 'emboss()', displayText: 'emboss' },
+      { text: 'edge()', displayText: 'edge' },
+      { text: 'sobelx()', displayText: 'sobelx' },
+      { text: 'sobely()', displayText: 'sobely' },
+      { text: 'pxsort(0.2, 0, 0, 1)', displayText: 'pxsort' },
+      { text: 'pysort(0.2, 0, 0, 1)', displayText: 'pysort' },
+    ],
+
     // Fractal Effects
     fractalEffects: [
       // Mirroring functions
@@ -260,6 +280,8 @@ export const hydraAutocomplete = {
             ...this.effects,
             this.createSeparator("🌈 Color Effects"),
             ...this.colorEffects,
+            this.createSeparator("🌁 Screen Space Shaders"),
+            ...this.screenSpaceShaders,
             this.createSeparator("🪞 Fractal Effects"),
             ...this.fractalEffects,
             this.createSeparator("🛠️ Utilities"),
@@ -322,7 +344,8 @@ export const hydraAutocomplete = {
             const effectSuggestions = this.effects.filter(item => item.displayText.includes(prefix));
             const colorEffectSuggestions = this.colorEffects.filter(item => item.displayText.includes(prefix));
             const fractalEffectSuggestions = this.fractalEffects.filter(item => item.displayText.includes(prefix));
-            
+            const screenSpaceSuggestions = this.screenSpaceShaders.filter(item => item.displayText.includes(prefix));
+
             const suggestions = [];
             if (transformSuggestions.length > 0) {
                 suggestions.push(this.createSeparator("🔄 Transformations"));
@@ -339,6 +362,10 @@ export const hydraAutocomplete = {
             if (fractalEffectSuggestions.length > 0) {
                 suggestions.push(this.createSeparator("🪞 Fractal Effects"));
                 suggestions.push(...fractalEffectSuggestions);
+            }
+            if (screenSpaceSuggestions.length > 0) {
+                suggestions.push(this.createSeparator("🌁 Screen Space Shaders"));
+                suggestions.push(...screenSpaceSuggestions);
             }
             
             return {
