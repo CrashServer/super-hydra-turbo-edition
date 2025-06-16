@@ -5,6 +5,7 @@ export const configPanel = {
 
     shortcuts: [
         { key: 'Ctrl+Enter', description: 'Execute code block' },
+        { key: 'Ctrl+Alt+Enter', description: 'Execute code block (without add auto out)' },
         { key: 'Ctrl+Space', description: 'Autocomplete' },
         { key: 'Ctrl+;', description: 'Stop Hydra (hush)' },
         { key: 'Alt+X', description: 'Toggle Comment' },

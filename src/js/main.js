@@ -85,6 +85,15 @@ document.addEventListener('DOMContentLoaded', () => {
     saveContent();
   }
   
+  function evaluateCodeHydraWithoutAddOut(cm) {
+    var {startLine,endLine} = hydraUtils.getBlock(cm, cm.getCursor().line);
+    let blockCode = cm.getRange({line: startLine, ch: 0}, {line: endLine, ch: cm.getLine(endLine).length});
+
+    hydraUtils.evaluateCode(blockCode);
+    flashCode(startLine, endLine);
+    saveContent();
+  }
+
   // Flash the code block
   function flashCode(lineStart, lineEnd) {
     for (let i = lineStart; i <= lineEnd; i++) {
@@ -125,7 +134,9 @@ document.addEventListener('DOMContentLoaded', () => {
   // key mapping
   editor.addKeyMap({
     'Ctrl-Enter': function(cm) {evaluateCodeHydra(cm);},
+    'Ctrl-Alt-Enter': function(cm) {evaluateCodeHydraWithoutAddOut(cm);},
     'Cmd-Enter': function(cm) {evaluateCodeHydra(cm);},
+    'Cmd-Alt-Enter': function(cm) {evaluateCodeHydraWithoutAddOut(cm);},
     'Ctrl-Space': 'autocomplete',
     'Cmd-Space': 'autocomplete', 
     'Ctrl-;': ()=> { hydraUtils.stopHydra(); },
