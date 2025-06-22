@@ -224,7 +224,6 @@ function showHydraDefinition(cm) {
   existingTooltips.forEach(tooltip => removeTooltip(tooltip));
 
   function findFunctionFromParentheses(line, pos) {
-    // Trouver toutes les fonctions avec leurs positions
     const functionPattern = /([a-zA-Z_][a-zA-Z0-9_]*)\s*\(/g;
     const functions = [];
     let match;
@@ -234,7 +233,6 @@ function showHydraDefinition(cm) {
       const startPos = match.index;
       const openParenPos = match.index + match[0].length - 1;
       
-      // Trouver la parenthèse fermante correspondante
       let depth = 1;
       let closeParenPos = openParenPos;
       
@@ -252,14 +250,12 @@ function showHydraDefinition(cm) {
       });
     }
     
-    // Trouver la fonction la plus spécifique (la plus imbriquée) contenant le curseur
     let targetFunction = null;
     let maxSpecificity = -1;
     
     for (const func of functions) {
       if (pos >= func.openParen && pos <= func.closeParen) {
-        // Le curseur est dans cette fonction
-        const specificity = func.openParen; // Plus la fonction est à droite, plus elle est spécifique
+        const specificity = func.openParen;
         if (specificity > maxSpecificity) {
           maxSpecificity = specificity;
           targetFunction = func.name;

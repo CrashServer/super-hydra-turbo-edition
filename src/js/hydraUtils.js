@@ -1,4 +1,5 @@
 import Hydra from 'hydra-synth';
+import P5 from './p5-wrapper.js';
 
 export const hydraUtils = {
     hydra: null,
@@ -8,6 +9,8 @@ export const hydraUtils = {
     init: function() {
         if (this.isInitialized) return;
         
+        window.p5 = P5; 
+
         if (typeof Hydra !== 'undefined') {
             this.setupHydra();
             this.isInitialized = true;
