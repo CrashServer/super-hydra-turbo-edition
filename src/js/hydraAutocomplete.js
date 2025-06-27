@@ -177,6 +177,7 @@ export const hydraAutocomplete = {
       { text: 'mirrorX2(0,1)', displayText: 'mirrorX2' },
       { text: 'mirrorY2(0,1)', displayText: 'mirrorY2' },
       { text: 'mirrorWrap()', displayText: 'mirrorWrap' },
+      { text: 'polar(1.0, 1.0, 0.5, 0.5)', displayText: 'polar' },
       
       // Other fractal functions
       { text: 'inversion()', displayText: 'inversion' },
@@ -222,6 +223,15 @@ export const hydraAutocomplete = {
       { text: 'Math.min()', displayText: 'min' },
       { text: 'Math.max()', displayText: 'max' },
       { text: 'screenRatio', displayText: 'sr' },
+    ],
+
+    space : [
+      { text: 'invtile(0.5)', displayText: 'invtile' },
+      { text: 'invsqrt(0.5)', displayText: 'invsqrt' },
+      { text: 'abslog(1.0)', displayText: 'abslog' },
+      { text: 'swave(1.0)', displayText: 'swave' },
+      { text: 'centermag(0.4,0.2,0,0)', displayText: 'centermag' },
+
     ],
 
     arrayMethods: [
@@ -278,6 +288,8 @@ export const hydraAutocomplete = {
             ...this.transformations,
             this.createSeparator("⚡ Effects"),
             ...this.effects,
+            this.createSeparator("🌌 Space Effects"),
+            ...this.space,
             this.createSeparator("🌈 Color Effects"),
             ...this.colorEffects,
             this.createSeparator("🌁 Screen Space Shaders"),
@@ -345,6 +357,7 @@ export const hydraAutocomplete = {
             const colorEffectSuggestions = this.colorEffects.filter(item => item.displayText.includes(prefix));
             const fractalEffectSuggestions = this.fractalEffects.filter(item => item.displayText.includes(prefix));
             const screenSpaceSuggestions = this.screenSpaceShaders.filter(item => item.displayText.includes(prefix));
+            const spaceSuggestion = this.space.filter(item => item.displayText.includes(prefix));
 
             const suggestions = [];
             if (transformSuggestions.length > 0) {
@@ -366,6 +379,10 @@ export const hydraAutocomplete = {
             if (screenSpaceSuggestions.length > 0) {
                 suggestions.push(this.createSeparator("🌁 Screen Space Shaders"));
                 suggestions.push(...screenSpaceSuggestions);
+            }
+            if (spaceSuggestion.length > 0) {
+                suggestions.push(this.createSeparator("🌌 Space Effects"));
+                suggestions.push(...spaceSuggestion);
             }
             
             return {

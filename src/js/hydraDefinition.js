@@ -169,6 +169,8 @@ const fractalEffects = {
   mirrorX2: 'mirrorX2(pos, coverage)\nMirrors image horizontally from other side. \npos: mirror position (default: 0) \ncoverage: effect coverage (default: 1) \nResult: [8765|5678]',
   mirrorY2: 'mirrorY2(pos, coverage)\nMirrors image vertically from other side. \npos: mirror position (default: 0) \ncoverage: effect coverage (default: 1) \nSame as mirrorX2 but on Y axis',
   mirrorWrap: 'mirrorWrap()\nMirrors any out of bounds coordinates. \nInput: [-8,-7,-6,-5,-4,-3,-2,-1] [1,2,3,4,5,6,7,8] [9,10,11,12,13,14,15,16] \nResult: [87654321] [12345678] [87654321]',
+  // Polar transformation
+  polar: 'polar(radius, angle, centerX, centerY)\nApplies polar transformation. \nradius: radius multiplier (default: 1.0) \nangle: angle multiplier (default: 1.0) \ncenterX: horizontal center (default: 0.5) \ncenterY: vertical center (default: 0.5)',
   
   // Other fractal functions
   inversion: 'inversion()\nApplies circular inversion transformation. \nUseful for creating fractal-like patterns.',

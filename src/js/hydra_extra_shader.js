@@ -1627,3 +1627,21 @@ setFunction({
   float d = fract(floor(distance(_st, vec2(0.5, 0.5)) * frequency) / frequency + time * speed);
   return vec4(d, d, d, 1.0);
 `})
+setFunction({
+  name: 'polar',
+  type: 'coord',
+  inputs: [
+    {name: 'radius', type: 'float', default: 1.0},
+    {name: 'angle',  type: 'float', default: 1.0},
+    {name: 'centerX', type: 'float', default: 0.5},
+    {name: 'centerY', type: 'float', default: 0.5},
+  ],
+  glsl: `
+  vec2 center = vec2(centerX, centerY);
+  vec2 xy = _st - center;
+  
+  float r = length(xy) * radius;
+  float theta = atan(xy.y, xy.x) * angle / (2.0 * 3.141592653589793);
+  
+  return vec2(theta + 0.5, r);
+`})
