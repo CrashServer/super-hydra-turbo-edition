@@ -241,7 +241,7 @@ export const hydraAutocomplete = {
       { text: 'offset(0)', displayText: 'offset' },
       { text: 'fit(0,1)', displayText: 'fit' },
     ],
-    
+
     // Separators for better organization
     createSeparator: function(text) {
         return {

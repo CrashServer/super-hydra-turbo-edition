@@ -50,6 +50,33 @@
   color: var(--col-white);
 }
 
+.output-src {
+  position: fixed;
+  bottom: 9rem;
+  right: 20px;
+  width: 60px;
+  height: 60px;
+  border-radius: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  border: 2px solid var(--col-blue-light);
+  box-shadow: 
+    0 0 20px rgba(74, 144, 194, 0.4),
+    inset 0 0 20px rgba(255, 255, 255, 0.1);
+}
+
+.output-src span {
+  font-size: 24px;
+  color: var(--col-blue-light);
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+  filter: drop-shadow(0 0 5px var(--col-blue-light));
+  font-family: 'Fira Code', monospace;
+  font-weight: bold;
+}
+  
+
 .config-panel {
   position: fixed;
   top: 0;

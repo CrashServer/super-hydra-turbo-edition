@@ -60,15 +60,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
   configPanel.init(editor);
 
+  const nonOutputFunctions = ["initCam", "initImage", "initVideo", "initScreen", "render", "setResolution", "setBin", "setCutoff", "setSmooth", "setScale", "hide", "show", "p5", "P5", "hush"];
+
   // Evaluate the code block, flash it, and save the content
   function evaluateCodeHydra(cm){
     var {startLine,endLine} = hydraUtils.getBlock(cm, cm.getCursor().line);
     let blockCode = cm.getRange({line: startLine, ch: 0}, {line: endLine, ch: cm.getLine(endLine).length});
 
-    // Vérifier si le bloc de code se termine par .out(...)
+    // Check if block end with .out(...) and if it's not a non-output function
+    const isNonOutputFunction = nonOutputFunctions.some(func => blockCode.includes(func));
+
     const outRegex = /\.out\s*\(.*\)\s*;?$/m;
-    if (!outRegex.test(blockCode)) {
-      // Ajouter .out() à la fin du bloc de code
+    if (!outRegex.test(blockCode) && !isNonOutputFunction) {
+      // Add .out() at the end of the block
       blockCode = blockCode.trim();
       blockCode += '.out()'
 
@@ -157,10 +161,12 @@ document.addEventListener('DOMContentLoaded', () => {
     'Cmd-S': (cm)=> {hydraUtils.saveEditorContent(cm)}, 
     'Ctrl-K': (cm) => { selectColor(cm); },
     'Cmd-K': (cm) => { selectColor(cm); }, 
-    'Alt-1': () => { hydraUtils.evaluateCode('render(o0)')},
-    'Alt-2': () => { hydraUtils.evaluateCode('render(o1)')},
-    'Alt-3': () => { hydraUtils.evaluateCode('render(o2)')},
-    'Alt-4': () => { hydraUtils.evaluateCode('render(o3)')},
+    'Alt-1': () => { hydraUtils.switchOutput(0)},
+    'Alt-2': () => { hydraUtils.switchOutput(1)},
+    'Alt-3': () => { hydraUtils.switchOutput(2)},
+    'Alt-4': () => { hydraUtils.switchOutput(3)},
+    'Alt-5': () => { hydraUtils.switchOutput()},
+    'Alt-P': () => { configPanel.togglePanel(); },
   });
 
   editor.setOption('hintOptions', {

@@ -32,6 +32,7 @@ export const hydraUtils = {
         });
         eval('setResolution(canvas.clientWidth, canvas.clientHeight)');
         eval('a.show()');
+        eval('p5 = new P5()');
         
         // load Hydra extensions after setup
         this.loadHydraExtensions();
@@ -178,4 +179,16 @@ export const hydraUtils = {
         a.download = filename;
         a.click();
     },
+
+    switchOutput(outputNbr=null) {
+        if (outputNbr === null) {
+            this.evaluateCode('render()');
+            document.getElementById('output-src').textContent = `all`;
+        }
+        else {
+            document.getElementById('output-src').textContent = `o${outputNbr}`;
+            const output = `render(o${outputNbr})`;
+            this.evaluateCode(output);
+        }
+    } 
 }
