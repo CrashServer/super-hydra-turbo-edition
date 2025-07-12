@@ -87,7 +87,7 @@ npm run dev
 - **[Vite](https://vitejs.dev/)** - Fast build tool
 - **[Extra shader](https://gitlab.com/metagrowing/extra-shaders-for-hydra)** - Extra Shaders 
 - **[Geikha functions](https://github.com/geikha/hyper-hydra)** - Additional patterns and functions
-
+- **[Hydra FCS](https://github.com/ymaltsman/Hydra-FCS)** - Functions and patterns inspired by algebraic geometry
 
 ## 📄 License
 

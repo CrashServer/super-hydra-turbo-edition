@@ -9,6 +9,98 @@ export const hydraAutocomplete = {
       { text: 'solid(1,1,1,1)', displayText: 'solid' },
       { text: 'src(o0)', displayText: 'src' },
     ],
+    
+    // Fonctions FCS - Courbes implicites
+    implicitCurves: [
+      { text: 'iCardioid(1.0,1.0)', displayText: 'iCardioid' },
+      { text: 'iBicorn(1.0,1.0,1.0)', displayText: 'iBicorn' },
+      { text: 'iAstroid(1.0,1.0,1.0)', displayText: 'iAstroid' },
+      { text: 'iCircle(1.0)', displayText: 'iCircle' },
+      { text: 'iCassOval(1.0,1.0,1.0,1.0)', displayText: 'iCassOval' },
+      { text: 'iSextic(1.0,1.0,1.0)', displayText: 'iSextic' },
+      { text: 'iCochleoid(1.0,1.0,1.0)', displayText: 'iCochleoid' },
+      { text: 'iCissoid(1.0,1.0,10.0)', displayText: 'iCissoid' },
+      { text: 'iSluzeConchoid(1.0,3.0,1.0)', displayText: 'iSluzeConchoid' },
+      { text: 'iDevil(1.0,4.0,1.0,3.0)', displayText: 'iDevil' },
+      { text: 'iDFolium(1.0,3.0)', displayText: 'iDFolium' },
+      { text: 'iSpiral(1.0,3.0,1.0)', displayText: 'iSpiral' },
+      { text: 'iFermatSpiral(1.0,1.0,1.0)', displayText: 'iFermatSpiral' },
+      { text: 'iFreethNephroid(1.0,1.0,2.0)', displayText: 'iFreethNephroid' },
+      { text: 'iInvoluteCircle(1.0,10.0)', displayText: 'iInvoluteCircle' },
+    ],
+
+    // Fonctions FCS - Courbes paramétriques
+    parametricCurves: [
+      { text: 'pAstroid(1.0)', displayText: 'pAstroid' },
+      { text: 'pSpiral()', displayText: 'pSpiral' },
+      { text: 'pCardioid(1.0,2.0)', displayText: 'pCardioid' },
+      { text: 'pConchoid(1.0)', displayText: 'pConchoid' },
+      { text: 'pEpicycloid(1.0,1.0)', displayText: 'pEpicycloid' },
+      { text: 'pDescartesFolium(1.0,1.0)', displayText: 'pDescartesFolium' },
+      { text: 'pHypocycloid(1.0,2.0)', displayText: 'pHypocycloid' },
+      { text: 'pHypotrochoid(1.0,2.0,1.0)', displayText: 'pHypotrochoid' },
+      { text: 'pInvoluteCircle(1.0)', displayText: 'pInvoluteCircle' },
+      { text: 'pCircle(1.0)', displayText: 'pCircle' },
+      { text: 'pLissajous(5.0,1.0,1.0,0.0)', displayText: 'pLissajous' },
+      { text: 'pNephroid(1.0)', displayText: 'pNephroid' },
+      { text: 'pPlateau(2.0,1.0)', displayText: 'pPlateau' },
+      { text: 'pTalbot(1.0)', displayText: 'pTalbot' },
+    ],
+
+    // Fonctions FCS - Surfaces paramétriques
+    parametricSurfaces: [
+      { text: 'pSphere(1.0,1.0)', displayText: 'pSphere' },
+      { text: 'pMobiusStrip(1.0,1.0)', displayText: 'pMobiusStrip' },
+      { text: 'pCylinder(1.0,1.0)', displayText: 'pCylinder' },
+      { text: 'pKleinBottle(1.0,1.0)', displayText: 'pKleinBottle' },
+      { text: 'pCrossCap(1.0,1.0)', displayText: 'pCrossCap' },
+      { text: 'pSteiner(1.0,1.0)', displayText: 'pSteiner' },
+      { text: 'pTorus(1.0,1.0,0.5)', displayText: 'pTorus' },
+    ],
+
+    // Fonctions FCS - Surfaces implicites 
+    implicitSurfaces: [
+      { text: 'iSphere()', displayText: 'iSphere' },
+      { text: 'iCube()', displayText: 'iCube' },
+      { text: 'iTorus(0.5,1.0)', displayText: 'iTorus' },
+      { text: 'iPlane(1.0,1.0,1.0)', displayText: 'iPlane' },
+      { text: 'iSteiner(1.0)', displayText: 'iSteiner' },
+      { text: 'iWineGlass(3.2)', displayText: 'iWineGlass' },
+      { text: 'iGenus2()', displayText: 'iGenus2' },
+    ],
+
+    // Fonctions FCS - Surfaces paramétriques inverses
+    inverseParametricSurfaces: [
+      { text: 'ipSphere(1.0)', displayText: 'ipSphere' },
+      { text: 'ipTorus(1.0)', displayText: 'ipTorus' },
+      { text: 'ipMobiusStrip()', displayText: 'ipMobiusStrip' },
+      { text: 'ipCylinder()', displayText: 'ipCylinder' },
+      { text: 'ipKleinBottle()', displayText: 'ipKleinBottle' },
+      { text: 'ipCrossCap(1.0)', displayText: 'ipCrossCap' },
+    ],
+
+    // Fonctions FCS - Hypersurfaces paramétriques
+    parametricHypersurfaces: [
+      { text: 'hpSphere(1.0)', displayText: 'hpSphere' },
+      { text: 'hpTorus(1.0,0.5)', displayText: 'hpTorus' },
+      { text: 'hpCone(1.0)', displayText: 'hpCone' },
+      { text: 'hpConeOblique(1.0,1.0,1.0,1.0)', displayText: 'hpConeOblique' },
+    ],
+
+    // Fonctions FCS - Courbes explicites
+    explicitCurves: [
+      { text: 'eCircle(1.0,1.0)', displayText: 'eCircle' },
+      { text: 'eBicorn(1.0)', displayText: 'eBicorn' },
+      { text: 'eCatenary(1.0)', displayText: 'eCatenary' },
+      { text: 'eCissoid(1.0,2.0)', displayText: 'eCissoid' },
+      { text: 'eLame(2.0,2.5,3.0,2.0)', displayText: 'eLame' },
+      { text: 'eNewton(2.0,0.4,1.0,0.8)', displayText: 'eNewton' },
+      { text: 'ePearl(2.0,1.0,1.0,1.0,1.0,1.0)', displayText: 'ePearl' },
+      { text: 'ePear(2.0,2.0,9.0)', displayText: 'ePear' },
+      { text: 'eStrophoid(2.0,5.0)', displayText: 'eStrophoid' },
+      { text: 'eTrisectrix(2.0,1.0)', displayText: 'eTrisectrix' },
+    ],
+
     noise: [
       // lib-noise sources
       { text: 'whitenoise(10.0,0.0)', displayText: 'whitenoise' },
@@ -200,9 +292,10 @@ export const hydraAutocomplete = {
     // Math functions and constants
     mathFunctions: [
       { text: '()=>Math.sin(time)', displayText: 'time' },
-      { text: '()=>sinrange(time, 0,1,1)', displayText: 'sinrange' },
-      { text: '()=>cosrange(time, 0,1)', displayText: 'cosrange' },
-      { text: '()=>sinrange(time, 0,1)', displayText: 'tanrange' },
+      { text: '()=>sinrange(time, 0,1,1,1)', displayText: 'sinrange' },
+      { text: '()=>cosrange(time, 0,1,1)', displayText: 'cosrange' },
+      { text: '()=>sinrange(time, 0,1,1)', displayText: 'tanrange' },
+      { text: '()=>sawrange(time, 0,1,1)', displayText: 'sawrange' },
       { text: '()=>mouse.x', displayText: 'mouse.x' },
       { text: '()=>mouse.y', displayText: 'mouse.y' },
       { text: '()=>a.fft[0]', displayText: 'a0' },
@@ -214,7 +307,9 @@ export const hydraAutocomplete = {
       { text: 'Math.tan()', displayText: 'tan' },
       { text: 'saw()', displayText: 'saw' },
       { text: '()=>sawt()', displayText: 'sawt' },
+      { text: '()=>bouncet(time, 3, 1, 8)', displayText: 'bouncet' },
       { text: 'Math.random()', displayText: 'random' },
+      { text: 'rand(0,1)', displayText: 'rand' },
       { text: 'Math.PI', displayText: 'Math.PI' },
       { text: 'Math.abs()', displayText: 'abs' },
       { text: 'Math.floor()', displayText: 'floor' },
@@ -282,7 +377,11 @@ export const hydraAutocomplete = {
             ...this.pattern,
             this.createSeparator("🔷 Antlia Shapes"),
             ...this.antliaShapes,
-            this.createSeparator("📺 Init Sources"),
+            this.createSeparator("� Implicit Curves FCS"),
+            ...this.implicitCurves,
+            this.createSeparator("🌐 Parametric Surfaces FCS"),
+            ...this.parametricSurfaces,
+            this.createSeparator("�📺 Init Sources"),
             ...this.initSources,
             this.createSeparator("🔄 Transformations"),
             ...this.transformations,
@@ -313,7 +412,11 @@ export const hydraAutocomplete = {
             ...this.pattern,
             this.createSeparator("🔷 Antlia Shapes"),
             ...this.antliaShapes,
-            this.createSeparator("📺 Init Sources"),
+            this.createSeparator("� Implicit Curves FCS"),
+            ...this.implicitCurves,
+            this.createSeparator("🌐 Parametric Surfaces FCS"),
+            ...this.parametricSurfaces,
+            this.createSeparator("�📺 Init Sources"),
             ...this.initSources,
             this.createSeparator("🛠️ Utilities"),
             ...this.utilities,
@@ -358,6 +461,11 @@ export const hydraAutocomplete = {
             const fractalEffectSuggestions = this.fractalEffects.filter(item => item.displayText.includes(prefix));
             const screenSpaceSuggestions = this.screenSpaceShaders.filter(item => item.displayText.includes(prefix));
             const spaceSuggestion = this.space.filter(item => item.displayText.includes(prefix));
+            const parametricCurvesSuggestions = this.parametricCurves.filter(item => item.displayText.includes(prefix));
+            const implicitSurfacesSuggestions = this.implicitSurfaces.filter(item => item.displayText.includes(prefix));
+            const inverseParametricSurfacesSuggestions = this.inverseParametricSurfaces.filter(item => item.displayText.includes(prefix));
+            const parametricHypersurfacesSuggestions = this.parametricHypersurfaces.filter(item => item.displayText.includes(prefix));
+            const explicitCurvesSuggestions = this.explicitCurves.filter(item => item.displayText.includes(prefix));
 
             const suggestions = [];
             if (transformSuggestions.length > 0) {
@@ -372,6 +480,10 @@ export const hydraAutocomplete = {
                 suggestions.push(this.createSeparator("🌈 Color Effects"));
                 suggestions.push(...colorEffectSuggestions);
             }
+            if (implicitSurfacesSuggestions.length > 0) {
+                suggestions.push(this.createSeparator("↕️ Implicit Surfaces FCS"));
+                suggestions.push(...implicitSurfacesSuggestions);
+            }
             if (fractalEffectSuggestions.length > 0) {
                 suggestions.push(this.createSeparator("🪞 Fractal Effects"));
                 suggestions.push(...fractalEffectSuggestions);
@@ -383,6 +495,22 @@ export const hydraAutocomplete = {
             if (spaceSuggestion.length > 0) {
                 suggestions.push(this.createSeparator("🌌 Space Effects"));
                 suggestions.push(...spaceSuggestion);
+            }
+            if (parametricCurvesSuggestions.length > 0) {
+                suggestions.push(this.createSeparator("📊 Parametric Curves FCS"));
+                suggestions.push(...parametricCurvesSuggestions);
+            }
+            if (inverseParametricSurfacesSuggestions.length > 0) {
+                suggestions.push(this.createSeparator("🔄 Inverse Parametric Surfaces FCS"));
+                suggestions.push(...inverseParametricSurfacesSuggestions);
+            }
+            if (parametricHypersurfacesSuggestions.length > 0) {
+                suggestions.push(this.createSeparator("🌀 Parametric Hypersurfaces FCS"));
+                suggestions.push(...parametricHypersurfacesSuggestions);
+            }
+            if (explicitCurvesSuggestions.length > 0) {
+                suggestions.push(this.createSeparator("📈 Explicit Curves FCS"));
+                suggestions.push(...explicitCurvesSuggestions);
             }
             
             return {

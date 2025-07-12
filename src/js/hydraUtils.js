@@ -57,6 +57,9 @@ export const hydraUtils = {
             await import('./antlia-shape.js');
             console.log('✅ Hydra Antlia Shapes loaded');
 
+            await import('./hydraFCS.js');
+            console.log('✅ Hydra FCS loaded');
+
             this.extensionsLoaded = true;
             console.log('🎉 All Hydra extensions loaded successfully!');
                         
