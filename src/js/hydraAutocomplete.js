@@ -239,6 +239,22 @@ export const hydraAutocomplete = {
       { text: 'coldot(1.0)', displayText: 'coldot' },
       { text: 'colboost(1.0)', displayText: 'colboost' },
       { text: 'colreflect(1.0)', displayText: 'colreflect' },
+
+      
+    ],
+
+    // Databending and glitch effects
+    databending: [
+      { text: 'databend(0.5,0.1,0.3)', displayText: 'databend' },
+      { text: 'rgbshift(1.0,0.05,0.2)', displayText: 'rgbshift' },
+      { text: 'pixelcorrupt(1.0,16.0,0.4)', displayText: 'pixelcorrupt' },
+      { text: 'compress(1.0,8.0,0.3)', displayText: 'compress' },
+
+      // Data bending and glitch effects
+      { text: 'glitchcoord(0.1,10.0,0.5)', displayText: 'glitchcoord' },
+      { text: 'pixelsort(0.2,0.5,0.0)', displayText: 'pixelsort' },
+      { text: 'memcorrupt(0.15,32.0,0.3)', displayText: 'memcorrupt' },
+      { text: 'interlace(0.1,200.0,0.05)', displayText: 'interlace' },
     ],
 
      // Screen Space Shaders
@@ -327,6 +343,8 @@ export const hydraAutocomplete = {
       { text: 'swave(1.0)', displayText: 'swave' },
       { text: 'centermag(0.4,0.2,0,0)', displayText: 'centermag' },
 
+      
+
     ],
 
     arrayMethods: [
@@ -391,6 +409,8 @@ export const hydraAutocomplete = {
             ...this.space,
             this.createSeparator("🌈 Color Effects"),
             ...this.colorEffects,
+            this.createSeparator("💾 DataBending"),
+            ...this.databending,
             this.createSeparator("🌁 Screen Space Shaders"),
             ...this.screenSpaceShaders,
             this.createSeparator("🪞 Fractal Effects"),
@@ -466,6 +486,7 @@ export const hydraAutocomplete = {
             const inverseParametricSurfacesSuggestions = this.inverseParametricSurfaces.filter(item => item.displayText.includes(prefix));
             const parametricHypersurfacesSuggestions = this.parametricHypersurfaces.filter(item => item.displayText.includes(prefix));
             const explicitCurvesSuggestions = this.explicitCurves.filter(item => item.displayText.includes(prefix));
+            const dataBendingSuggestions = this.databending.filter(item => item.displayText.includes(prefix));
 
             const suggestions = [];
             if (transformSuggestions.length > 0) {
@@ -479,6 +500,10 @@ export const hydraAutocomplete = {
             if (colorEffectSuggestions.length > 0) {
                 suggestions.push(this.createSeparator("🌈 Color Effects"));
                 suggestions.push(...colorEffectSuggestions);
+            }
+            if (dataBendingSuggestions.length > 0) {
+                suggestions.push(this.createSeparator("💾 DataBending"))
+                suggestions.push(...dataBendingSuggestions);
             }
             if (implicitSurfacesSuggestions.length > 0) {
                 suggestions.push(this.createSeparator("↕️ Implicit Surfaces FCS"));

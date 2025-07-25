@@ -169,6 +169,11 @@ const colorEffects = {
   coldot: 'coldot(amount)\nApplies RGB dot product of rotated channels. \namount: effect intensity (default: 1.0)',
   colboost: 'colboost(amount)\nBoosts colors using vector operations. \namount: boost intensity (default: 1.0)',
   colreflect: 'colreflect(amount)\nCreates color reflection effect. \namount: reflection intensity (default: 1.0)',
+  // Databending effects
+  databend: 'databend(amount, shift, corruption)\nSimulates digital data corruption with bit shifting. \namount: corruption intensity (default: 0.5) \nshift: channel shift amount (default: 0.1) \ncorruption: digital noise level (default: 0.3)',
+  rgbshift: 'rgbshift(amount, offset, chaos)\nSeparates and corrupts RGB channels. \namount: effect intensity (default: 1.0) \noffset: channel separation (default: 0.05) \nchaos: corruption chaos level (default: 0.2)',
+  pixelcorrupt: 'pixelcorrupt(amount, blocksize, corruption)\nCorrupts pixels in blocks with various digital artifacts. \namount: effect intensity (default: 1.0) \nblocksize: corruption block size (default: 16.0) \ncorruption: corruption probability (default: 0.4)',
+  compress: 'compress(amount, quality, blockiness)\nSimulates JPEG-like compression artifacts. \namount: effect intensity (default: 1.0) \nquality: compression quality levels (default: 8.0) \nblockiness: blocking artifact intensity (default: 0.3)',
 };
 
 const screenSpaceShaders = {
@@ -202,6 +207,12 @@ const fractalEffects = {
   
   // Other fractal functions
   inversion: 'inversion()\nApplies circular inversion transformation. \nUseful for creating fractal-like patterns.',
+
+  // Databending effects
+  glitchcoord: 'glitchcoord(amount, frequency, chaos)\nApplies digital glitch distortions to coordinates. \namount: distortion strength (default: 0.1) \nfrequency: scanline frequency (default: 10.0) \nchaos: chaos factor (default: 0.5)',
+  pixelsort: 'pixelsort(amount, threshold, direction)\nApplies pixel sorting effect to coordinates. \namount: sorting displacement (default: 0.2) \nthreshold: sorting trigger threshold (default: 0.5) \ndirection: sort direction 0=horizontal, 1=vertical (default: 0.0)',
+  memcorrupt: 'memcorrupt(amount, blocksize, corruption)\nSimulates memory corruption on coordinate space. \namount: corruption strength (default: 0.15) \nblocksize: memory block size (default: 32.0) \ncorruption: corruption probability (default: 0.3)',
+  interlace: 'interlace(amount, lines, drift)\nApplies interlace corruption effect. \namount: effect strength (default: 0.1) \nlines: number of scanlines (default: 200.0) \ndrift: horizontal drift amount (default: 0.05)',
 };
 
 const antliaShapes = {
