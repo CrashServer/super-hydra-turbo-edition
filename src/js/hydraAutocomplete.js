@@ -31,20 +31,20 @@ export const hydraAutocomplete = {
 
     // Fonctions FCS - Courbes paramétriques
     parametricCurves: [
-      { text: 'pAstroid(1.0)', displayText: 'pAstroid' },
-      { text: 'pSpiral()', displayText: 'pSpiral' },
-      { text: 'pCardioid(1.0,2.0)', displayText: 'pCardioid' },
-      { text: 'pConchoid(1.0)', displayText: 'pConchoid' },
-      { text: 'pEpicycloid(1.0,1.0)', displayText: 'pEpicycloid' },
-      { text: 'pDescartesFolium(1.0,1.0)', displayText: 'pDescartesFolium' },
-      { text: 'pHypocycloid(1.0,2.0)', displayText: 'pHypocycloid' },
-      { text: 'pHypotrochoid(1.0,2.0,1.0)', displayText: 'pHypotrochoid' },
-      { text: 'pInvoluteCircle(1.0)', displayText: 'pInvoluteCircle' },
-      { text: 'pCircle(1.0)', displayText: 'pCircle' },
-      { text: 'pLissajous(5.0,1.0,1.0,0.0)', displayText: 'pLissajous' },
-      { text: 'pNephroid(1.0)', displayText: 'pNephroid' },
-      { text: 'pPlateau(2.0,1.0)', displayText: 'pPlateau' },
-      { text: 'pTalbot(1.0)', displayText: 'pTalbot' },
+      { text: 'pAstroid(src(o0),1.0)', displayText: 'pAstroid' },
+      { text: 'pSpiral(src(o0),)', displayText: 'pSpiral' },
+      { text: 'pCardioid(src(o0),1.0,2.0)', displayText: 'pCardioid' },
+      { text: 'pConchoid(src(o0),1.0)', displayText: 'pConchoid' },
+      { text: 'pEpicycloid(src(o0),1.0,1.0)', displayText: 'pEpicycloid' },
+      { text: 'pDescartesFolium(src(o0),1.0,1.0)', displayText: 'pDescartesFolium' },
+      { text: 'pHypocycloid(src(o0),1.0,2.0)', displayText: 'pHypocycloid' },
+      { text: 'pHypotrochoid(src(o0),1.0,2.0,1.0)', displayText: 'pHypotrochoid' },
+      { text: 'pInvoluteCircle(src(o0),1.0)', displayText: 'pInvoluteCircle' },
+      { text: 'pCircle(src(o0),1.0)', displayText: 'pCircle' },
+      { text: 'pLissajous(src(o0),5.0,1.0,1.0,0.0)', displayText: 'pLissajous' },
+      { text: 'pNephroid(src(o0),1.0)', displayText: 'pNephroid' },
+      { text: 'pPlateau(src(o0),2.0,1.0)', displayText: 'pPlateau' },
+      { text: 'pTalbot(src(o0),1.0)', displayText: 'pTalbot' },
     ],
 
     // Fonctions FCS - Surfaces paramétriques
@@ -71,20 +71,20 @@ export const hydraAutocomplete = {
 
     // Fonctions FCS - Surfaces paramétriques inverses
     inverseParametricSurfaces: [
-      { text: 'ipSphere(1.0)', displayText: 'ipSphere' },
-      { text: 'ipTorus(1.0)', displayText: 'ipTorus' },
-      { text: 'ipMobiusStrip()', displayText: 'ipMobiusStrip' },
-      { text: 'ipCylinder()', displayText: 'ipCylinder' },
-      { text: 'ipKleinBottle()', displayText: 'ipKleinBottle' },
-      { text: 'ipCrossCap(1.0)', displayText: 'ipCrossCap' },
+      { text: 'ipSphere(src(o0), 1.0)', displayText: 'ipSphere' },
+      { text: 'ipTorus(src(o0),1.0)', displayText: 'ipTorus' },
+      { text: 'ipMobiusStrip(src(o0))', displayText: 'ipMobiusStrip' },
+      { text: 'ipCylinder(src(o0))', displayText: 'ipCylinder' },
+      { text: 'ipKleinBottle(src(o0))', displayText: 'ipKleinBottle' },
+      { text: 'ipCrossCap(src(o0)1.0)', displayText: 'ipCrossCap' },
     ],
 
     // Fonctions FCS - Hypersurfaces paramétriques
     parametricHypersurfaces: [
-      { text: 'hpSphere(1.0)', displayText: 'hpSphere' },
-      { text: 'hpTorus(1.0,0.5)', displayText: 'hpTorus' },
-      { text: 'hpCone(1.0)', displayText: 'hpCone' },
-      { text: 'hpConeOblique(1.0,1.0,1.0,1.0)', displayText: 'hpConeOblique' },
+      { text: 'hpSphere(src(o0),1.0)', displayText: 'hpSphere' },
+      { text: 'hpTorus(src(o0),1.0,0.5)', displayText: 'hpTorus' },
+      { text: 'hpCone(src(o0),1.0)', displayText: 'hpCone' },
+      { text: 'hpConeOblique(src(o0),1.0,1.0,1.0,1.0)', displayText: 'hpConeOblique' },
     ],
 
     // Fonctions FCS - Courbes explicites
@@ -355,25 +355,71 @@ export const hydraAutocomplete = {
       { text: 'fit(0,1)', displayText: 'fit' },
     ],
 
-    // Separators for better organization
-    createSeparator: function(text) {
+    // État interne pour la navigation hiérarchique
+    _currentView: 'categories', // 'categories' ou 'items'
+    _currentCategory: null,
+    _completionWidget: null,
+
+    // Définition des catégories avec leurs éléments
+    categories: {
+        "🔥 Sources": { items: "sources", blankOnly: true },
+        "🌊 Noise Functions": { items: "noise", blankOnly: true },
+        "🎨 Art Patterns": { items: "art", blankOnly: true },
+        "✨ Soft Patterns": { items: "pattern", blankOnly: true },
+        "🔷 Antlia Shapes": { items: "antliaShapes", blankOnly: true },
+        "📐 Implicit Curves FCS": { items: "implicitCurves", blankOnly: true },
+        "🌐 Parametric Surfaces FCS": { items: "parametricSurfaces", blankOnly: true },
+        "🔵 Implicit Surfaces FCS": { items: "implicitSurfaces", blankOnly: false },
+        "🔴 Inverse Parametric Surfaces FCS": { items: "inverseParametricSurfaces", blankOnly: false },
+        "🟢 Parametric Curves FCS": { items: "parametricCurves", blankOnly: false },
+        "🟣 Explicit Curves FCS": { items: "explicitCurves", blankOnly: false },
+        "🔶 Parametric Hypersurfaces FCS": { items: "parametricHypersurfaces", blankOnly: false },
+        "📺 Init Sources": { items: "initSources", blankOnly: true },
+        "🔄 Transformations": { items: "transformations", blankOnly: false },
+        "⚡ Effects": { items: "effects", blankOnly: false },
+        "🌌 Space Effects": { items: "space", blankOnly: false },
+        "🌈 Color Effects": { items: "colorEffects", blankOnly: false },
+        "💾 DataBending": { items: "databending", blankOnly: false },
+        "🌁 Screen Space Shaders": { items: "screenSpaceShaders", blankOnly: false },
+        "🪞 Fractal Effects": { items: "fractalEffects", blankOnly: false },
+        "🧮 Math & Audio": { items: "mathFunctions", blankOnly: false },
+        "🛠️ Utilities": { items: "utilities", blankOnly: false }
+    },
+
+    // Création d'un séparateur de catégorie
+    createCategorySeparator: function(text, categoryKey) {
         return {
-            text: "", 
-            displayText: text,
-            className: "autocomplete-separator",
+            text: "",
+            displayText: text + " →",
+            className: "autocomplete-category-separator",
+            categoryKey: categoryKey,
             render: function(element, self, data) {
-                element.className += " autocomplete-separator";
-                element.innerHTML = `<span class="separator-text">${data.displayText}</span>`;
-                element.style.pointerEvents = 'none';
-                element.style.cursor = 'default';
-                element.setAttribute('data-separator', 'true');
-                element.setAttribute('aria-disabled', 'true');
+                element.className += " autocomplete-category-separator";
+                element.innerHTML = `<span class="category-text">${data.displayText}</span>`;
+                element.style.cursor = 'pointer';
+                element.setAttribute('data-category', data.categoryKey);
             },
-            hint: function() {
+            hint: function(cm, self, data) {
+                // Ne fait rien - la navigation se fait via les touches
                 return false;
+            }
+        };
+    },
+
+    // Création d'un bouton retour
+    createBackButton: function() {
+        return {
+            text: "",
+            displayText: "← Retour aux catégories",
+            className: "autocomplete-back-button",
+            render: function(element, self, data) {
+                element.className += " autocomplete-back-button";
+                element.innerHTML = `<span class="back-text">${data.displayText}</span>`;
+                element.style.cursor = 'pointer';
             },
-            disabled: true,
-            separator: true
+            hint: function(cm, self, data) {
+                return false;
+            }
         };
     },
 
@@ -384,85 +430,15 @@ export const hydraAutocomplete = {
         const token = cm.getTokenAt(cursor);
         const cursorPosition = cursor.ch;
         
-        const allSuggestions = [
-            this.createSeparator("🔥 Sources"),
-            ...this.sources,
-            this.createSeparator("🌊 Noise Functions"),
-            ...this.noise,
-            this.createSeparator("🎨 Art Patterns"),
-            ...this.art,
-            this.createSeparator("✨ Soft Patterns"),
-            ...this.pattern,
-            this.createSeparator("🔷 Antlia Shapes"),
-            ...this.antliaShapes,
-            this.createSeparator("� Implicit Curves FCS"),
-            ...this.implicitCurves,
-            this.createSeparator("🌐 Parametric Surfaces FCS"),
-            ...this.parametricSurfaces,
-            this.createSeparator("�📺 Init Sources"),
-            ...this.initSources,
-            this.createSeparator("🔄 Transformations"),
-            ...this.transformations,
-            this.createSeparator("⚡ Effects"),
-            ...this.effects,
-            this.createSeparator("🌌 Space Effects"),
-            ...this.space,
-            this.createSeparator("🌈 Color Effects"),
-            ...this.colorEffects,
-            this.createSeparator("💾 DataBending"),
-            ...this.databending,
-            this.createSeparator("🌁 Screen Space Shaders"),
-            ...this.screenSpaceShaders,
-            this.createSeparator("🪞 Fractal Effects"),
-            ...this.fractalEffects,
-            this.createSeparator("🛠️ Utilities"),
-            ...this.utilities,
-            this.createSeparator("🧮 Math & Audio"),
-            ...this.mathFunctions
-        ];
-
-        const blankSuggestions = [
-            this.createSeparator("🔥 Sources"),
-            ...this.sources,
-            this.createSeparator("🌊 Noise Functions"),
-            ...this.noise,
-            this.createSeparator("🎨 Art Patterns"),
-            ...this.art,
-            this.createSeparator("✨ Soft Patterns"),
-            ...this.pattern,
-            this.createSeparator("🔷 Antlia Shapes"),
-            ...this.antliaShapes,
-            this.createSeparator("� Implicit Curves FCS"),
-            ...this.implicitCurves,
-            this.createSeparator("🌐 Parametric Surfaces FCS"),
-            ...this.parametricSurfaces,
-            this.createSeparator("�📺 Init Sources"),
-            ...this.initSources,
-            this.createSeparator("🛠️ Utilities"),
-            ...this.utilities,
-        ];
-      
-        if (beforeCursor.trim() === '') {
-            const suggestions = blankSuggestions.filter(item => {
-                if (item.className === "autocomplete-separator") return true;
-                return item.displayText.includes(token.string);
-            });
-            
-            return {
-                list: suggestions,
-                from: CodeMirror.Pos(cursor.line, beforeCursor.lastIndexOf('(') + 1),
-                to: CodeMirror.Pos(cursor.line, cursor.ch)
-            };
-        }
-      
+        // Reset view state for new hints
+        this._currentView = 'categories';
+        this._currentCategory = null;
+        
         // Array methods
         if (/\]\s*\.\s*\w*$/.test(beforeCursor)) {
             const prefix = token.string.slice(0, cursorPosition - token.start).replace(/[^a-zA-Z]/g, "");
             const dotIndex = beforeCursor.lastIndexOf('.');
-            const suggestions = [
-                this.createSeparator("🔗 Array Methods"),
-                ...this.arrayMethods.filter(item => item.displayText.includes(prefix))
-            ];
+            const suggestions = this.arrayMethods.filter(item => item.displayText.includes(prefix));
             return {
                 list: suggestions,
                 from: CodeMirror.Pos(cursor.line, dotIndex + 1),
@@ -470,91 +446,127 @@ export const hydraAutocomplete = {
             };
         }
       
-        // Transformations and effects after a dot
+        // Transformations and effects after a dot - Mode hiérarchique
         if (/\.\s*\w*$/.test(beforeCursor)) {
             const prefix = token.string.slice(0, cursorPosition - token.start).replace(/[^a-zA-Z]/g, "");
             const dotIndex = beforeCursor.lastIndexOf('.');
             
-            const transformSuggestions = this.transformations.filter(item => item.displayText.includes(prefix));
-            const effectSuggestions = this.effects.filter(item => item.displayText.includes(prefix));
-            const colorEffectSuggestions = this.colorEffects.filter(item => item.displayText.includes(prefix));
-            const fractalEffectSuggestions = this.fractalEffects.filter(item => item.displayText.includes(prefix));
-            const screenSpaceSuggestions = this.screenSpaceShaders.filter(item => item.displayText.includes(prefix));
-            const spaceSuggestion = this.space.filter(item => item.displayText.includes(prefix));
-            const parametricCurvesSuggestions = this.parametricCurves.filter(item => item.displayText.includes(prefix));
-            const implicitSurfacesSuggestions = this.implicitSurfaces.filter(item => item.displayText.includes(prefix));
-            const inverseParametricSurfacesSuggestions = this.inverseParametricSurfaces.filter(item => item.displayText.includes(prefix));
-            const parametricHypersurfacesSuggestions = this.parametricHypersurfaces.filter(item => item.displayText.includes(prefix));
-            const explicitCurvesSuggestions = this.explicitCurves.filter(item => item.displayText.includes(prefix));
-            const dataBendingSuggestions = this.databending.filter(item => item.displayText.includes(prefix));
-
-            const suggestions = [];
-            if (transformSuggestions.length > 0) {
-                suggestions.push(this.createSeparator("🔄 Transformations"));
-                suggestions.push(...transformSuggestions);
-            }
-            if (effectSuggestions.length > 0) {
-                suggestions.push(this.createSeparator("⚡ Effects"));
-                suggestions.push(...effectSuggestions);
-            }
-            if (colorEffectSuggestions.length > 0) {
-                suggestions.push(this.createSeparator("🌈 Color Effects"));
-                suggestions.push(...colorEffectSuggestions);
-            }
-            if (dataBendingSuggestions.length > 0) {
-                suggestions.push(this.createSeparator("💾 DataBending"))
-                suggestions.push(...dataBendingSuggestions);
-            }
-            if (implicitSurfacesSuggestions.length > 0) {
-                suggestions.push(this.createSeparator("↕️ Implicit Surfaces FCS"));
-                suggestions.push(...implicitSurfacesSuggestions);
-            }
-            if (fractalEffectSuggestions.length > 0) {
-                suggestions.push(this.createSeparator("🪞 Fractal Effects"));
-                suggestions.push(...fractalEffectSuggestions);
-            }
-            if (screenSpaceSuggestions.length > 0) {
-                suggestions.push(this.createSeparator("🌁 Screen Space Shaders"));
-                suggestions.push(...screenSpaceSuggestions);
-            }
-            if (spaceSuggestion.length > 0) {
-                suggestions.push(this.createSeparator("🌌 Space Effects"));
-                suggestions.push(...spaceSuggestion);
-            }
-            if (parametricCurvesSuggestions.length > 0) {
-                suggestions.push(this.createSeparator("📊 Parametric Curves FCS"));
-                suggestions.push(...parametricCurvesSuggestions);
-            }
-            if (inverseParametricSurfacesSuggestions.length > 0) {
-                suggestions.push(this.createSeparator("🔄 Inverse Parametric Surfaces FCS"));
-                suggestions.push(...inverseParametricSurfacesSuggestions);
-            }
-            if (parametricHypersurfacesSuggestions.length > 0) {
-                suggestions.push(this.createSeparator("🌀 Parametric Hypersurfaces FCS"));
-                suggestions.push(...parametricHypersurfacesSuggestions);
-            }
-            if (explicitCurvesSuggestions.length > 0) {
-                suggestions.push(this.createSeparator("📈 Explicit Curves FCS"));
-                suggestions.push(...explicitCurvesSuggestions);
+            // Si pas de préfixe, montrer les catégories hiérarchiques
+            if (prefix === '') {
+                const categorySuggestions = [];
+                Object.keys(this.categories).forEach(categoryName => {
+                    const categoryInfo = this.categories[categoryName];
+                    if (!categoryInfo.blankOnly) { // Pour les effets/transformations
+                        const separator = this.createCategorySeparator(categoryName, categoryName);
+                        categorySuggestions.push(separator);
+                    }
+                });
+                
+                return {
+                    list: categorySuggestions,
+                    from: CodeMirror.Pos(cursor.line, dotIndex + 1),
+                    to: CodeMirror.Pos(cursor.line, cursor.ch)
+                };
             }
             
+            // Si il y a un préfixe, afficher toutes les suggestions filtrées (ancien comportement)
+            const allEffects = [
+                ...this.transformations,
+                ...this.effects,
+                ...this.colorEffects,
+                ...this.fractalEffects,
+                ...this.screenSpaceShaders,
+                ...this.space,
+                ...this.parametricCurves,
+                ...this.implicitSurfaces,
+                ...this.inverseParametricSurfaces,
+                ...this.parametricHypersurfaces,
+                ...this.explicitCurves,
+                ...this.databending
+            ].filter(item => item.displayText.includes(prefix));
+            
             return {
-                list: suggestions,
+                list: allEffects,
                 from: CodeMirror.Pos(cursor.line, dotIndex + 1),
                 to: CodeMirror.Pos(cursor.line, cursor.ch)
             };
         }
       
+        // Pour une ligne vide ou au début, montrer les catégories hiérarchiques
+        if (beforeCursor.trim() === '') {
+            const categorySuggestions = [];
+            
+            // Ajouter seulement les catégories appropriées pour une ligne vide
+            Object.keys(this.categories).forEach(categoryName => {
+                const categoryInfo = this.categories[categoryName];
+                if (categoryInfo.blankOnly) {
+                    const separator = this.createCategorySeparator(categoryName, categoryName);
+                    categorySuggestions.push(separator);
+                }
+            });
+            
+            return {
+                list: categorySuggestions,
+                from: CodeMirror.Pos(cursor.line, cursor.ch),
+                to: CodeMirror.Pos(cursor.line, cursor.ch)
+            };
+        }
+        
+        // Pour les autres cas (quand on a commencé à taper), afficher toutes les suggestions filtrées (ancien comportement)
         const prefix = token.string.slice(0, cursorPosition - token.start).replace(/[^a-zA-Z]/g, "");
-        const suggestions = (prefix !== '') ? allSuggestions.filter(item => {
-            // if (item.className === "autocomplete-separator") return true;
-            return item.displayText.includes(prefix);
-        }) : allSuggestions;
+        
+        // Créer une liste complète de toutes les suggestions
+        const allSuggestions = [
+            ...this.sources,
+            ...this.noise,
+            ...this.art,
+            ...this.pattern,
+            ...this.antliaShapes,
+            ...this.implicitCurves,
+            ...this.parametricSurfaces,
+            ...this.initSources,
+            ...this.transformations,
+            ...this.effects,
+            ...this.colorEffects,
+            ...this.fractalEffects,
+            ...this.screenSpaceShaders,
+            ...this.space,
+            ...this.databending,
+            ...this.utilities,
+            ...this.mathFunctions
+        ];
+        
+        // Filtrer par le préfixe
+        const filteredSuggestions = allSuggestions.filter(item => 
+            item.displayText.toLowerCase().includes(prefix.toLowerCase())
+        );
         
         return {
-          list: suggestions,
-          from: CodeMirror.Pos(cursor.line, cursor.ch - prefix.length),
-          to: CodeMirror.Pos(cursor.line, cursor.ch)
+            list: filteredSuggestions,
+            from: CodeMirror.Pos(cursor.line, cursor.ch - prefix.length),
+            to: CodeMirror.Pos(cursor.line, cursor.ch)
+        };
+    },
+
+    // Fonction pour afficher les éléments d'une catégorie
+    showCategoryItems: function(cm, categoryKey) {
+        const categoryInfo = this.categories[categoryKey];
+        if (!categoryInfo || !this[categoryInfo.items]) {
+            return null;
+        }
+
+        const items = [
+            this.createBackButton(),
+            ...this[categoryInfo.items]
+        ];
+
+        this._currentView = 'items';
+        this._currentCategory = categoryKey;
+
+        return {
+            list: items,
+            from: cm.getCursor(),
+            to: cm.getCursor()
         };
     }
 };

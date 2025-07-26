@@ -173,8 +173,48 @@ document.addEventListener('DOMContentLoaded', () => {
     hint: (cm) => {
       return hydraAutocomplete.hint(cm, CodeMirror);
     },
-    completeSingle: true,
- 
+    completeSingle: false,
+    extraKeys: {
+      'Right': function(cm, handle) {
+        // Si on est sur une catégorie, montrer ses éléments
+        const activeElement = document.querySelector('.CodeMirror-hint-active');
+        if (activeElement) {
+          const categoryAttr = activeElement.getAttribute('data-category');
+          
+          if (categoryAttr) {
+            const categoryItems = hydraAutocomplete.showCategoryItems(cm, categoryAttr);
+            if (categoryItems) {
+              handle.close();
+              setTimeout(() => {
+                cm.showHint({
+                  hint: () => categoryItems,
+                  completeSingle: false,
+                  extraKeys: {
+                    'Left': function(cm, handle) {
+                      // Retour aux catégories
+                      handle.close();
+                      setTimeout(() => {
+                        cm.showHint();
+                      }, 50);
+                    }
+                  }
+                });
+              }, 50);
+            }
+          }
+        }
+      },
+      'Left': function(cm, handle) {
+        // Si on est dans les éléments et que le premier élément (bouton retour) est sélectionné
+        const selectedItem = handle.data[handle.selectedHint];
+        if (selectedItem && selectedItem.displayText && selectedItem.displayText.includes('Retour aux catégories')) {
+          handle.close();
+          setTimeout(() => {
+            cm.showHint();
+          }, 50);
+        }
+      }
+    }
   });
 
 

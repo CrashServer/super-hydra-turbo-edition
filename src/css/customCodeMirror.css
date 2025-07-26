@@ -98,6 +98,62 @@
   visibility: visible ;
 }
 
+/* Styles pour les catégories hiérarchiques */
+.CodeMirror-hints .autocomplete-category-separator {
+  background: linear-gradient(45deg, var(--col-blue-dark), var(--col-blue)); 
+  color: #E8F4FD ;
+  font-weight: bold ;
+  text-align: left ;
+  font-size: 12px ;
+  letter-spacing: 1px ;
+  cursor: pointer ;
+  border-top: 1px solid #6BBFDF ;
+  border-bottom: 1px solid #6BBFDF ;
+  margin: 2px 0 ;
+  padding: 6px 12px ;
+  transition: all 0.2s ease;
+}
+
+.CodeMirror-hints .autocomplete-category-separator:hover,
+.CodeMirror-hints .CodeMirror-hint-active.autocomplete-category-separator {
+  background: linear-gradient(45deg, var(--col-blue), var(--col-green));
+  transform: translateX(4px);
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.CodeMirror-hints .autocomplete-category-separator .category-text {
+  display: block;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+}
+
+/* Styles pour le bouton retour */
+.CodeMirror-hints .autocomplete-back-button {
+  background: linear-gradient(45deg, var(--col-red-dark), var(--col-red)); 
+  color: #E8F4FD ;
+  font-weight: bold ;
+  text-align: left ;
+  font-size: 12px ;
+  letter-spacing: 1px ;
+  cursor: pointer ;
+  border-top: 1px solid #ff6b6b ;
+  border-bottom: 1px solid #ff6b6b ;
+  margin: 2px 0 ;
+  padding: 6px 12px ;
+  transition: all 0.2s ease;
+}
+
+.CodeMirror-hints .autocomplete-back-button:hover,
+.CodeMirror-hints .CodeMirror-hint-active.autocomplete-back-button {
+  background: linear-gradient(45deg, var(--col-red), var(--col-orange));
+  transform: translateX(-4px);
+  box-shadow: -2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.CodeMirror-hints .autocomplete-back-button .back-text {
+  display: block;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+}
+
 
 .CodeMirror-hints .autocomplete-separator .separator-text {
   display: block;
@@ -105,15 +161,15 @@
 }
 
 /* Style for real suggestion */
-.CodeMirror-hints li:not(.autocomplete-separator) {
+.CodeMirror-hints li:not(.autocomplete-separator):not(.autocomplete-category-separator):not(.autocomplete-back-button) {
   background: rgba(15, 20, 25, 0.9);
   color: #E8F4FD;
   border-left: 3px solid transparent;
   transition: all 0.2s ease;
 }
 
-.CodeMirror-hints li:not(.autocomplete-separator):hover,
-.CodeMirror-hints .CodeMirror-hint-active:not(.autocomplete-separator) {
+.CodeMirror-hints li:not(.autocomplete-separator):not(.autocomplete-category-separator):not(.autocomplete-back-button):hover,
+.CodeMirror-hints .CodeMirror-hint-active:not(.autocomplete-separator):not(.autocomplete-category-separator):not(.autocomplete-back-button) {
   background: linear-gradient(90deg, rgba(74, 144, 194, 0.2), rgba(107, 191, 223, 0.1)) ;
   border-left: 3px solid #6BBFDF ;
   color: #6BBFDF ;

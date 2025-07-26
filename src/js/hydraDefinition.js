@@ -241,20 +241,20 @@ const antliaShapes = {
 };
 
 const parametricCurves = {
-  pAstroid: 'pAstroid(a)\nParametric astroid curve.\na: scale parameter (default: 1.0)',
-  pSpiral: 'pSpiral()\nParametric spiral curve.',
-  pCardioid: 'pCardioid(a, p)\nParametric cardioid curve.\na: scale parameter (default: 1.0)\np: parameter (default: 2.0)',
-  pConchoid: 'pConchoid(a)\nParametric conchoid curve.\na: shape parameter (default: 1.0)',
-  pEpicycloid: 'pEpicycloid(a, b)\nParametric epicycloid curve.\na: radius parameter (default: 1.0)\nb: radius parameter (default: 1.0)',
-  pDescartesFolium: 'pDescartesFolium(a, b)\nParametric Descartes folium.\na: scale parameter (default: 1.0)\nb: shape parameter (default: 1.0)',
-  pHypocycloid: 'pHypocycloid(a, b)\nParametric hypocycloid curve.\na: radius parameter (default: 1.0)\nb: frequency parameter (default: 2.0)',
-  pHypotrochoid: 'pHypotrochoid(a, b, d)\nParametric hypotrochoid curve.\na: radius parameter (default: 1.0)\nb: frequency parameter (default: 2.0)\nd: distance parameter (default: 1.0)',
-  pInvoluteCircle: 'pInvoluteCircle(a)\nParametric involute of circle.\na: radius parameter (default: 1.0)',
-  pCircle: 'pCircle(a)\nParametric circle.\na: radius (default: 1.0)',
-  pLissajous: 'pLissajous(a, n, b, phase)\nParametric Lissajous curve.\na: amplitude parameter (default: 5.0)\nn: frequency parameter (default: 1.0)\nb: amplitude parameter (default: 1.0)\nphase: phase shift (default: 0.0)',
-  pNephroid: 'pNephroid(a)\nParametric nephroid curve.\na: radius parameter (default: 1.0)',
-  pPlateau: 'pPlateau(m, n)\nParametric Plateau curve.\nm: parameter (default: 2.0)\nn: parameter (default: 1.0)',
-  pTalbot: 'pTalbot(a)\nParametric Talbot curve.\na: scale parameter (default: 1.0)',
+  pAstroid: 'pAstroid(texture,a)\nParametric astroid curve.\na: scale parameter (default: 1.0)',
+  pSpiral: 'pSpiral(texture,)\nParametric spiral curve.',
+  pCardioid: 'pCardioid(texture,a, p)\nParametric cardioid curve.\na: scale parameter (default: 1.0)\np: parameter (default: 2.0)',
+  pConchoid: 'pConchoid(texture,a)\nParametric conchoid curve.\na: shape parameter (default: 1.0)',
+  pEpicycloid: 'pEpicycloid(texture,a, b)\nParametric epicycloid curve.\na: radius parameter (default: 1.0)\nb: radius parameter (default: 1.0)',
+  pDescartesFolium: 'pDescartesFolium(texture,a, b)\nParametric Descartes folium.\na: scale parameter (default: 1.0)\nb: shape parameter (default: 1.0)',
+  pHypocycloid: 'pHypocycloid(texture,a, b)\nParametric hypocycloid curve.\na: radius parameter (default: 1.0)\nb: frequency parameter (default: 2.0)',
+  pHypotrochoid: 'pHypotrochoid(texture,a, b, d)\nParametric hypotrochoid curve.\na: radius parameter (default: 1.0)\nb: frequency parameter (default: 2.0)\nd: distance parameter (default: 1.0)',
+  pInvoluteCircle: 'pInvoluteCircle(texture,a)\nParametric involute of circle.\na: radius parameter (default: 1.0)',
+  pCircle: 'pCircle(texture,a)\nParametric circle.\na: radius (default: 1.0)',
+  pLissajous: 'pLissajous(texture,a, n, b, phase)\nParametric Lissajous curve.\na: amplitude parameter (default: 5.0)\nn: frequency parameter (default: 1.0)\nb: amplitude parameter (default: 1.0)\nphase: phase shift (default: 0.0)',
+  pNephroid: 'pNephroid(texture,a)\nParametric nephroid curve.\na: radius parameter (default: 1.0)',
+  pPlateau: 'pPlateau(texture,m, n)\nParametric Plateau curve.\nm: parameter (default: 2.0)\nn: parameter (default: 1.0)',
+  pTalbot: 'pTalbot(texture,a)\nParametric Talbot curve.\na: scale parameter (default: 1.0)',
 };
 
 const implicitSurfaces = {
@@ -268,19 +268,19 @@ const implicitSurfaces = {
 };
 
 const inverseParametricSurfaces = {
-  ipSphere: 'ipSphere(a)\nInverse parametric sphere.\na: radius parameter (default: 1.0)',
-  ipTorus: 'ipTorus(a)\nInverse parametric torus.\na: shape parameter (default: 1.0)',
-  ipMobiusStrip: 'ipMobiusStrip()\nInverse parametric Mobius strip.',
-  ipCylinder: 'ipCylinder()\nInverse parametric cylinder.',
-  ipKleinBottle: 'ipKleinBottle()\nInverse parametric Klein bottle.',
-  ipCrossCap: 'ipCrossCap(a)\nInverse parametric cross cap.\na: scale parameter (default: 1.0)',
+  ipSphere: 'ipSphere(texture, a)\nInverse parametric sphere.\na: radius parameter (default: 1.0)',
+  ipTorus: 'ipTorus(texture,a)\nInverse parametric torus.\na: shape parameter (default: 1.0)',
+  ipMobiusStrip: 'ipMobiusStrip(texture)\nInverse parametric Mobius strip.',
+  ipCylinder: 'ipCylinder(texture)\nInverse parametric cylinder.',
+  ipKleinBottle: 'ipKleinBottle(texture)\nInverse parametric Klein bottle.',
+  ipCrossCap: 'ipCrossCap(texture,a)\nInverse parametric cross cap.\na: scale parameter (default: 1.0)',
 };
 
 const parametricHypersurfaces = {
-  hpSphere: 'hpSphere(a)\nParametric hypersphere.\na: radius parameter (default: 1.0)',
-  hpTorus: 'hpTorus(c, a)\nParametric hypertorus.\nc: major radius (default: 1.0)\na: minor radius (default: 0.5)',
-  hpCone: 'hpCone(c)\nParametric hypercone.\nc: shape parameter (default: 1.0)',
-  hpConeOblique: 'hpConeOblique(c, vx, vy, vz)\nParametric oblique hypercone.\nc: shape parameter (default: 1.0)\nvx: direction x (default: 1.0)\nvy: direction y (default: 1.0)\nvz: direction z (default: 1.0)',
+  hpSphere: 'hpSphere(texture,a)\nParametric hypersphere.\na: radius parameter (default: 1.0)',
+  hpTorus: 'hpTorus(texture,c, a)\nParametric hypertorus.\nc: major radius (default: 1.0)\na: minor radius (default: 0.5)',
+  hpCone: 'hpCone(texture,c)\nParametric hypercone.\nc: shape parameter (default: 1.0)',
+  hpConeOblique: 'hpConeOblique(texture,c, vx, vy, vz)\nParametric oblique hypercone.\nc: shape parameter (default: 1.0)\nvx: direction x (default: 1.0)\nvy: direction y (default: 1.0)\nvz: direction z (default: 1.0)',
 };
 
 const explicitCurves = {

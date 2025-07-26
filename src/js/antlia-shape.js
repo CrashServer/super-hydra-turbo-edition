@@ -15,6 +15,7 @@ window.rectangle = function (s = .3, ratio = [1, 1], smooth = 0) {
     return solid(1, 1, 1, 1).mask(shape(4, s, smooth).scale(1 / r, screenRatio * ratio[0], ratio[1]));
 }
 window.triangle = function (s = .3, smooth = .007) {
+    let yoffset;
     if (typeof s === 'function')
         yoffset = () => (0 - s() / 4);
     else

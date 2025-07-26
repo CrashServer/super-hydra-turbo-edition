@@ -277,3 +277,301 @@ setFunction({
   
   return coord;
 `})
+
+// DATAMOSHING EFFECTS
+// Temporal corruption and frame persistence effects
+
+// Frame freezing effect - simulates P-frame corruption using spatial blocks
+setFunction({
+  name: 'framefreeze',
+  type: 'combineCoord',
+  inputs: [
+    {name: 'amount', type: 'float', default: 0.3},
+    {name: 'blocksize', type: 'float', default: 16.0},
+    {name: 'persistence', type: 'float', default: 0.8},
+    {name: 'glitch_freq', type: 'float', default: 0.3},
+  ],
+  glsl: `
+  vec2 coord = _st;
+  
+  // Create macro blocks for compression simulation
+  vec2 blockCoord = floor(coord * blocksize) / blocksize;
+  vec2 localCoord = fract(coord * blocksize);
+  
+  // Generate semi-persistent corruption pattern
+  float timeStep = floor(time * glitch_freq);
+  float blockSeed = fract(sin(dot(blockCoord, vec2(12.9898, 78.233)) + timeStep * 0.1) * 43758.5453);
+  
+  // Simulate frame persistence by freezing certain blocks
+  if (blockSeed < persistence) {
+    // Create temporal displacement for frozen blocks
+    float frozenTime = floor(time * glitch_freq - blockSeed * 10.0) / glitch_freq;
+    
+    // Apply different types of P-frame corruption
+    float corruptType = fract(blockSeed * 5.0);
+    
+    if (corruptType < 0.3) {
+      // Block freeze - offset to a "previous" position
+      vec2 frozenOffset = amount * vec2(
+        sin(frozenTime + blockSeed * 7.0),
+        cos(frozenTime + blockSeed * 5.0)
+      ) * 0.1;
+      coord = blockCoord + frozenOffset + localCoord / blocksize;
+    } else if (corruptType < 0.6) {
+      // Block duplication/echo
+      vec2 echoOffset = amount * vec2(
+        sin(blockSeed * 15.0),
+        cos(blockSeed * 12.0)
+      ) * 0.05;
+      coord += echoOffset;
+    } else {
+      // Temporal lag - sample from slightly shifted position
+      float lag = amount * 0.02 * sin(frozenTime + blockSeed * 10.0);
+      coord.x += lag;
+    }
+  }
+  
+  return coord;
+`})
+
+// Alternative frame corruption as color effect
+setFunction({
+  name: 'pframeglitch',
+  type: 'color',
+  inputs: [
+    {name: 'amount', type: 'float', default: 0.8},
+    {name: 'blockiness', type: 'float', default: 0.4},
+    {name: 'temporal_freq', type: 'float', default: 0.2},
+    {name: 'corruption_rate', type: 'float', default: 0.3},
+  ],
+  glsl: `
+  vec3 col = _c0.rgb;
+  
+  // Use color brightness to simulate spatial blocks
+  float brightness = dot(col, vec3(0.299, 0.587, 0.114));
+  vec2 colorBlock = floor(vec2(brightness, 1.0 - brightness) * 20.0) / 20.0;
+  
+  // Generate corruption pattern
+  float timeStep = floor(time * temporal_freq);
+  float blockSeed = fract(sin(dot(colorBlock, vec2(12.9898, 78.233)) + timeStep) * 43758.5453);
+  
+  if (blockSeed < corruption_rate) {
+    float corruptType = fract(blockSeed * 7.0);
+    
+    if (corruptType < 0.25) {
+      // P-frame quantization
+      col = floor(col * 8.0) / 8.0;
+    } else if (corruptType < 0.5) {
+      // Temporal color persistence
+      float persistTime = floor(time * temporal_freq - blockSeed * 5.0) / temporal_freq;
+      vec3 persistColor = vec3(
+        0.5 + 0.5 * sin(persistTime + blockSeed * 10.0),
+        0.5 + 0.5 * sin(persistTime * 1.1 + blockSeed * 8.0),
+        0.5 + 0.5 * sin(persistTime * 0.9 + blockSeed * 12.0)
+      );
+      col = mix(col, persistColor, blockiness);
+    } else if (corruptType < 0.75) {
+      // Motion vector error simulation
+      vec3 shifted = vec3(
+        col.r * (1.0 + 0.1 * sin(timeStep + blockSeed * 5.0)),
+        col.g * (1.0 + 0.1 * cos(timeStep + blockSeed * 7.0)),
+        col.b * (1.0 + 0.1 * sin(timeStep * 1.3 + blockSeed * 3.0))
+      );
+      col = mix(col, shifted, amount);
+    } else {
+      // Color bleeding
+      col.r = mix(col.r, col.g, blockiness * 0.3);
+      col.b = mix(col.b, col.r, blockiness * 0.2);
+    }
+  }
+  
+  return vec4(clamp(col, 0.0, 1.0), _c0.a);
+`})
+
+// Motion vector corruption
+setFunction({
+  name: 'motionglitch',
+  type: 'coord',
+  inputs: [
+    {name: 'amount', type: 'float', default: 0.2},
+    {name: 'vector_scale', type: 'float', default: 0.1},
+    {name: 'temporal_chaos', type: 'float', default: 0.4},
+    {name: 'block_size', type: 'float', default: 8.0},
+  ],
+  glsl: `
+  vec2 coord = _st;
+  
+  // Create motion vector blocks
+  vec2 blockCoord = floor(coord * block_size) / block_size;
+  vec2 localCoord = fract(coord * block_size);
+  
+  // Generate temporal corruption pattern
+  float timeVar = time * temporal_chaos;
+  float blockSeed = fract(sin(dot(blockCoord, vec2(12.9898, 78.233)) + floor(timeVar)) * 43758.5453);
+  
+  // Simulate corrupted motion vectors
+  if (blockSeed > 0.6) {
+    // Generate fake motion vector
+    vec2 motionVector = vector_scale * vec2(
+      sin(blockSeed * 20.0 + timeVar),
+      cos(blockSeed * 15.0 + timeVar * 1.2)
+    );
+    
+    // Apply motion vector displacement with temporal persistence
+    float persistence = step(0.3, fract(blockSeed * 7.0 + floor(timeVar * 0.5)));
+    coord += amount * motionVector * persistence;
+  }
+  
+  return coord;
+`})
+
+// I-frame corruption with temporal bleeding
+setFunction({
+  name: 'iframe_corrupt',
+  type: 'color',
+  inputs: [
+    {name: 'amount', type: 'float', default: 0.8},
+    {name: 'bleed_rate', type: 'float', default: 0.05},
+    {name: 'corruption_freq', type: 'float', default: 0.2},
+    {name: 'color_shift', type: 'float', default: 0.3},
+  ],
+  glsl: `
+  vec3 col = _c0.rgb;
+  
+  // Simulate I-frame timing with discrete time steps
+  float iFrameTime = floor(time * corruption_freq);
+  float framePhase = fract(time * corruption_freq);
+  
+  // Create corruption pattern based on pixel position and time
+  vec2 pixelId = floor(_st * 64.0); // Simulate pixel coordinates
+  float corruptSeed = fract(sin(dot(pixelId, vec2(12.9898, 78.233)) + iFrameTime) * 43758.5453);
+  
+  if (corruptSeed < 0.4) {
+    // Color channel corruption
+    vec3 corruptedColor = col;
+    
+    // Apply different corruption types
+    float corruptType = fract(corruptSeed * 5.0);
+    
+    if (corruptType < 0.25) {
+      // Channel swap with persistence
+      corruptedColor = col.brg;
+    } else if (corruptType < 0.5) {
+      // Color bleeding simulation - mix with spatially offset color
+      vec2 bleedOffset = vec2(sin(iFrameTime), cos(iFrameTime)) * bleed_rate;
+      vec3 bleedColor = vec3(
+        0.5 + 0.5 * sin(iFrameTime + (pixelId.x + bleedOffset.x) * 0.1),
+        0.5 + 0.5 * cos(iFrameTime + (pixelId.y + bleedOffset.y) * 0.1),
+        0.5 + 0.5 * sin(iFrameTime * 1.5 + dot(pixelId + bleedOffset, vec2(0.1, 0.1)))
+      );
+      corruptedColor = mix(col, bleedColor, bleed_rate * (1.0 - framePhase));
+    } else if (corruptType < 0.75) {
+      // Color quantization with shift
+      corruptedColor = floor(col * 8.0) / 8.0;
+      corruptedColor.r += color_shift * sin(iFrameTime) * 0.1;
+      corruptedColor.g += color_shift * cos(iFrameTime * 1.1) * 0.1;
+    } else {
+      // Invert certain channels
+      corruptedColor.r = 1.0 - col.r;
+      corruptedColor = mix(col, corruptedColor, 0.7);
+    }
+    
+    col = mix(col, corruptedColor, amount);
+  }
+  
+  return vec4(clamp(col, 0.0, 1.0), _c0.a);
+`})
+
+// Echo/ghosting effect from temporal compression errors
+setFunction({
+  name: 'temporaecho',
+  type: 'color',
+  inputs: [
+    {name: 'amount', type: 'float', default: 0.6},
+    {name: 'echo_delay', type: 'float', default: 0.5},
+    {name: 'echo_decay', type: 'float', default: 0.7},
+    {name: 'spatial_offset', type: 'float', default: 0.02},
+  ],
+  glsl: `
+  vec3 col = _c0.rgb;
+  
+  // Simulate temporal echoes using time-shifted spatial patterns
+  // Since we can't access previous frames, we create echo-like effects using spatial displacement
+  
+  // Create multiple time-shifted spatial patterns
+  float baseTime = time;
+  float echoTime1 = baseTime - echo_delay;
+  float echoTime2 = baseTime - echo_delay * 2.0;
+  
+  // Generate echo patterns based on shifted spatial coordinates
+  vec2 echoCoord1 = _st + spatial_offset * vec2(
+    sin(echoTime1 * 2.0), 
+    cos(echoTime1 * 1.8)
+  );
+  vec2 echoCoord2 = _st + spatial_offset * vec2(
+    sin(echoTime2 * 1.5), 
+    cos(echoTime2 * 2.2)
+  );
+  
+  // Create echo colors using spatial hash functions
+  float echo1Brightness = fract(sin(dot(echoCoord1 * 20.0, vec2(12.9898, 78.233)) + echoTime1) * 43758.5453);
+  float echo2Brightness = fract(sin(dot(echoCoord2 * 25.0, vec2(93.9898, 67.345)) + echoTime2) * 28754.2343);
+  
+  // Apply echo effect by modulating the current color
+  vec3 echo1Color = col * (0.8 + 0.4 * echo1Brightness);
+  vec3 echo2Color = col * (0.6 + 0.6 * echo2Brightness);
+  
+  // Mix echoes with decay
+  col = mix(col, echo1Color, amount * echo_decay * 0.3);
+  col = mix(col, echo2Color, amount * echo_decay * echo_decay * 0.2);
+  
+  // Add some chromatic aberration for echo effect
+  col.r = mix(col.r, echo1Color.r, amount * 0.1);
+  col.b = mix(col.b, echo2Color.b, amount * 0.1);
+  
+  return vec4(clamp(col, 0.0, 1.0), _c0.a);
+`})
+
+// Macro block displacement (typical of MPEG corruption)
+setFunction({
+  name: 'macroblock',
+  type: 'coord',
+  inputs: [
+    {name: 'amount', type: 'float', default: 0.3},
+    {name: 'block_size', type: 'float', default: 16.0},
+    {name: 'displacement', type: 'float', default: 0.1},
+    {name: 'corruption_rate', type: 'float', default: 0.2},
+  ],
+  glsl: `
+  vec2 coord = _st;
+  
+  // Create macro block grid
+  vec2 blockId = floor(coord * block_size);
+  vec2 blockCoord = blockId / block_size;
+  vec2 localCoord = fract(coord * block_size);
+  
+  // Generate corruption pattern with temporal persistence
+  float timeStep = floor(time * corruption_rate);
+  float blockSeed = fract(sin(dot(blockId, vec2(12.9898, 78.233)) + timeStep) * 43758.5453);
+  
+  if (blockSeed < 0.3) {
+    // Apply macro block displacement
+    vec2 blockDisplacement = displacement * vec2(
+      sin(blockSeed * 30.0 + timeStep),
+      cos(blockSeed * 25.0 + timeStep * 1.1)
+    );
+    
+    // Move the entire block
+    coord = (blockCoord + blockDisplacement) + localCoord / block_size;
+    
+    // Add some additional chaos within the block
+    if (blockSeed < 0.1) {
+      coord += amount * 0.1 * vec2(
+        sin(localCoord.x * 20.0 + timeStep),
+        cos(localCoord.y * 15.0 + timeStep)
+      ) / block_size;
+    }
+  }
+  
+  return coord;
+`})
