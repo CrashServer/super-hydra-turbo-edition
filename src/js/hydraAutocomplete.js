@@ -1,5 +1,5 @@
 export const hydraAutocomplete = {
-    // Sources (générateurs de base)
+    // Sources 
     sources: [
       { text: 'noise(10,0.1)', displayText: 'noise' },
       { text: 'voronoi(5,0.3,0.3)', displayText: 'voronoi' },
@@ -10,7 +10,7 @@ export const hydraAutocomplete = {
       { text: 'src(o0)', displayText: 'src' },
     ],
     
-    // Fonctions FCS - Courbes implicites
+    // Fonctions FCS - implicit curves
     implicitCurves: [
       { text: 'iCardioid(1.0,1.0)', displayText: 'iCardioid' },
       { text: 'iBicorn(1.0,1.0,1.0)', displayText: 'iBicorn' },
@@ -29,7 +29,7 @@ export const hydraAutocomplete = {
       { text: 'iInvoluteCircle(1.0,10.0)', displayText: 'iInvoluteCircle' },
     ],
 
-    // Fonctions FCS - Courbes paramétriques
+    // Fonctions FCS - parametric curves
     parametricCurves: [
       { text: 'pAstroid(src(o0),1.0)', displayText: 'pAstroid' },
       { text: 'pSpiral(src(o0),)', displayText: 'pSpiral' },
@@ -47,7 +47,7 @@ export const hydraAutocomplete = {
       { text: 'pTalbot(src(o0),1.0)', displayText: 'pTalbot' },
     ],
 
-    // Fonctions FCS - Surfaces paramétriques
+    // Fonctions FCS - parametric surfaces
     parametricSurfaces: [
       { text: 'pSphere(1.0,1.0)', displayText: 'pSphere' },
       { text: 'pMobiusStrip(1.0,1.0)', displayText: 'pMobiusStrip' },
@@ -58,7 +58,7 @@ export const hydraAutocomplete = {
       { text: 'pTorus(1.0,1.0,0.5)', displayText: 'pTorus' },
     ],
 
-    // Fonctions FCS - Surfaces implicites 
+    // Fonctions FCS - implicit surfaces 
     implicitSurfaces: [
       { text: 'iSphere()', displayText: 'iSphere' },
       { text: 'iCube()', displayText: 'iCube' },
@@ -69,7 +69,7 @@ export const hydraAutocomplete = {
       { text: 'iGenus2()', displayText: 'iGenus2' },
     ],
 
-    // Fonctions FCS - Surfaces paramétriques inverses
+    // Fonctions FCS - parametric surfaces inverted
     inverseParametricSurfaces: [
       { text: 'ipSphere(src(o0), 1.0)', displayText: 'ipSphere' },
       { text: 'ipTorus(src(o0),1.0)', displayText: 'ipTorus' },
@@ -79,7 +79,7 @@ export const hydraAutocomplete = {
       { text: 'ipCrossCap(src(o0)1.0)', displayText: 'ipCrossCap' },
     ],
 
-    // Fonctions FCS - Hypersurfaces paramétriques
+    // Fonctions FCS - Hypersurfaces parametric
     parametricHypersurfaces: [
       { text: 'hpSphere(src(o0),1.0)', displayText: 'hpSphere' },
       { text: 'hpTorus(src(o0),1.0,0.5)', displayText: 'hpTorus' },
@@ -87,7 +87,7 @@ export const hydraAutocomplete = {
       { text: 'hpConeOblique(src(o0),1.0,1.0,1.0,1.0)', displayText: 'hpConeOblique' },
     ],
 
-    // Fonctions FCS - Courbes explicites
+    // Fonctions FCS - explicit curves
     explicitCurves: [
       { text: 'eCircle(1.0,1.0)', displayText: 'eCircle' },
       { text: 'eBicorn(1.0)', displayText: 'eBicorn' },
@@ -165,7 +165,7 @@ export const hydraAutocomplete = {
       { text: 's0.initScreen()', displayText: 'SrcScreen' },
     ],
 
-    // Transformations (modificateurs)
+    // Transformations
     transformations: [
       { text: 'add()', displayText: 'add' },
       { text: 'sub()', displayText: 'sub' },
@@ -355,12 +355,10 @@ export const hydraAutocomplete = {
       { text: 'fit(0,1)', displayText: 'fit' },
     ],
 
-    // État interne pour la navigation hiérarchique
-    _currentView: 'categories', // 'categories' ou 'items'
+    _currentView: 'categories',
     _currentCategory: null,
     _completionWidget: null,
 
-    // Définition des catégories avec leurs éléments
     categories: {
         "🔥 Sources": { items: "sources", blankOnly: true },
         "🌊 Noise Functions": { items: "noise", blankOnly: true },
@@ -386,7 +384,7 @@ export const hydraAutocomplete = {
         "🛠️ Utilities": { items: "utilities", blankOnly: false }
     },
 
-    // Création d'un séparateur de catégorie
+    // create separator for categories
     createCategorySeparator: function(text, categoryKey) {
         return {
             text: "",
@@ -400,13 +398,12 @@ export const hydraAutocomplete = {
                 element.setAttribute('data-category', data.categoryKey);
             },
             hint: function(cm, self, data) {
-                // Ne fait rien - la navigation se fait via les touches
                 return false;
             }
         };
     },
 
-    // Création d'un bouton retour
+    // create back button for categories
     createBackButton: function() {
         return {
             text: "",
@@ -435,10 +432,10 @@ export const hydraAutocomplete = {
         this._currentCategory = null;
         
         // Array methods
-        if (/\]\s*\.\s*\w*$/.test(beforeCursor)) {
-            const prefix = token.string.slice(0, cursorPosition - token.start).replace(/[^a-zA-Z]/g, "");
+        if (/\]\s*\.\s*[\w*]*$/.test(beforeCursor)) {
+            const prefix = beforeCursor.split('.').pop() || '';
             const dotIndex = beforeCursor.lastIndexOf('.');
-            const suggestions = this.arrayMethods.filter(item => item.displayText.includes(prefix));
+            const suggestions = this.filterWithWildcards(this.arrayMethods, prefix);
             return {
                 list: suggestions,
                 from: CodeMirror.Pos(cursor.line, dotIndex + 1),
@@ -447,11 +444,11 @@ export const hydraAutocomplete = {
         }
       
         // Transformations and effects after a dot - Mode hiérarchique
-        if (/\.\s*\w*$/.test(beforeCursor)) {
-            const prefix = token.string.slice(0, cursorPosition - token.start).replace(/[^a-zA-Z]/g, "");
+        if (/\.\s*[\w*]*$/.test(beforeCursor)) {
+            const prefix = beforeCursor.split('.').pop() || '';
             const dotIndex = beforeCursor.lastIndexOf('.');
             
-            // Si pas de préfixe, montrer les catégories hiérarchiques
+            // if there is no prefix, show categories
             if (prefix === '') {
                 const categorySuggestions = [];
                 Object.keys(this.categories).forEach(categoryName => {
@@ -469,7 +466,7 @@ export const hydraAutocomplete = {
                 };
             }
             
-            // Si il y a un préfixe, afficher toutes les suggestions filtrées (ancien comportement)
+            // if there is a prefix, filter the effects and transformations with wildcards
             const allEffects = [
                 ...this.transformations,
                 ...this.effects,
@@ -483,20 +480,21 @@ export const hydraAutocomplete = {
                 ...this.parametricHypersurfaces,
                 ...this.explicitCurves,
                 ...this.databending
-            ].filter(item => item.displayText.includes(prefix));
+            ];
+            
+            const filteredEffects = this.filterWithWildcards(allEffects, prefix);
             
             return {
-                list: allEffects,
+                list: filteredEffects,
                 from: CodeMirror.Pos(cursor.line, dotIndex + 1),
                 to: CodeMirror.Pos(cursor.line, cursor.ch)
             };
         }
       
-        // Pour une ligne vide ou au début, montrer les catégories hiérarchiques
+        // for an empty line or when the user hasn't typed anything yet
         if (beforeCursor.trim() === '') {
             const categorySuggestions = [];
             
-            // Ajouter seulement les catégories appropriées pour une ligne vide
             Object.keys(this.categories).forEach(categoryName => {
                 const categoryInfo = this.categories[categoryName];
                 if (categoryInfo.blankOnly) {
@@ -512,10 +510,15 @@ export const hydraAutocomplete = {
             };
         }
         
-        // Pour les autres cas (quand on a commencé à taper), afficher toutes les suggestions filtrées (ancien comportement)
-        const prefix = token.string.slice(0, cursorPosition - token.start).replace(/[^a-zA-Z]/g, "");
+        // show the filtered suggestions based on the current word
+        let prefix = '';
+        let startPos = cursor.ch;
         
-        // Créer une liste complète de toutes les suggestions
+        const wordStart = line.lastIndexOf(' ', cursor.ch - 1) + 1;
+        const wordEnd = cursor.ch;
+        prefix = line.slice(wordStart, wordEnd);
+        
+        // complete list of all suggestions
         const allSuggestions = [
             ...this.sources,
             ...this.noise,
@@ -536,19 +539,71 @@ export const hydraAutocomplete = {
             ...this.mathFunctions
         ];
         
-        // Filtrer par le préfixe
-        const filteredSuggestions = allSuggestions.filter(item => 
-            item.displayText.toLowerCase().includes(prefix.toLowerCase())
-        );
+        // filter prefix with wildcards
+        const filteredSuggestions = this.filterWithWildcards(allSuggestions, prefix);
         
         return {
             list: filteredSuggestions,
-            from: CodeMirror.Pos(cursor.line, cursor.ch - prefix.length),
+            from: CodeMirror.Pos(cursor.line, wordStart),
             to: CodeMirror.Pos(cursor.line, cursor.ch)
         };
     },
 
-    // Fonction pour afficher les éléments d'une catégorie
+    // Fonction for filtering suggestions with wildcards
+    filterWithWildcards: function(suggestions, pattern) {
+        if (!pattern || pattern === '') {
+            return suggestions;
+        }
+
+        // if no wildcards, use simple contains
+        if (!pattern.includes('*')) {
+            return suggestions.filter(item => 
+                item.displayText.toLowerCase().includes(pattern.toLowerCase())
+            );
+        }
+
+        // wildcard regex
+        const regex = this.createWildcardRegex(pattern);
+        
+        return suggestions.filter(item => 
+            regex.test(item.displayText.toLowerCase())
+        );
+    },
+
+    // wildcard regex creation
+    createWildcardRegex: function(pattern) {
+        if (!pattern) return /^$/;
+        
+        const lowerPattern = pattern.toLowerCase().trim();
+        if (!lowerPattern) return /^$/;
+        
+        const escapedPattern = lowerPattern.replace(/[.+?^${}()|[\]\\]/g, '\\$&');
+        
+        let regexPattern;
+        
+        if (lowerPattern.startsWith('*') && lowerPattern.endsWith('*') && lowerPattern.length > 2) {
+            const middle = escapedPattern.slice(1, -1);
+            regexPattern = `.*${middle}.*`;
+        } else if (lowerPattern.startsWith('*') && lowerPattern.length > 1) {
+            const suffix = escapedPattern.slice(1);
+            regexPattern = `.*${suffix}$`;
+        } else if (lowerPattern.endsWith('*') && lowerPattern.length > 1) {
+            const prefix = escapedPattern.slice(0, -1);
+            regexPattern = `^${prefix}.*`;
+        } else if (lowerPattern.includes('*')) {
+            regexPattern = escapedPattern.replace(/\*/g, '.*');
+        } else {
+            regexPattern = `.*${escapedPattern}.*`;
+        }
+        
+        try {
+            return new RegExp(regexPattern, 'i');
+        } catch (e) {
+            return /.*/ ;
+        }
+    },
+
+    // show elements of a category
     showCategoryItems: function(cm, categoryKey) {
         const categoryInfo = this.categories[categoryKey];
         if (!categoryInfo || !this[categoryInfo.items]) {
