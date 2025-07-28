@@ -98,6 +98,7 @@ This project is open source and available under the [MIT License](LICENSE).
 - **Olivia Jack** - Creator of Hydra Synth
 - **Thomas Jourdan** - Additional shaders
 - **Geikha** - Hyper Hydra functions
+- **Yuri Maltsman** - Hydra FCS functions
 - **CodeMirror Team** - Editor component
 - **Contributors** - Bug fixes and enhancements
 - **CrashServer** - Project maintainer
