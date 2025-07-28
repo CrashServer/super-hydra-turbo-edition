@@ -184,4 +184,115 @@ setFunction({name:"databend",type:"color",inputs:[{name:"amount",type:"float",de
   }
   
   return coord;
+`});setFunction({name:"framefreeze",type:"combineCoord",inputs:[{name:"amount",type:"float",default:.3},{name:"blocksize",type:"float",default:16},{name:"persistence",type:"float",default:.8},{name:"glitch_freq",type:"float",default:.3}],glsl:`
+  vec2 coord = _st;
+  
+  // Create macro blocks for compression simulation
+  vec2 blockCoord = floor(coord * blocksize) / blocksize;
+  vec2 localCoord = fract(coord * blocksize);
+  
+  // Generate semi-persistent corruption pattern
+  float timeStep = floor(time * glitch_freq);
+  float blockSeed = fract(sin(dot(blockCoord, vec2(12.9898, 78.233)) + timeStep * 0.1) * 43758.5453);
+  
+  // Simulate frame persistence by freezing certain blocks
+  if (blockSeed < persistence) {
+    // Create temporal displacement for frozen blocks
+    float frozenTime = floor(time * glitch_freq - blockSeed * 10.0) / glitch_freq;
+    
+    // Apply different types of P-frame corruption
+    float corruptType = fract(blockSeed * 5.0);
+    
+    if (corruptType < 0.3) {
+      // Block freeze - offset to a "previous" position
+      vec2 frozenOffset = amount * vec2(
+        sin(frozenTime + blockSeed * 7.0),
+        cos(frozenTime + blockSeed * 5.0)
+      ) * 0.1;
+      coord = blockCoord + frozenOffset + localCoord / blocksize;
+    } else if (corruptType < 0.6) {
+      // Block duplication/echo
+      vec2 echoOffset = amount * vec2(
+        sin(blockSeed * 15.0),
+        cos(blockSeed * 12.0)
+      ) * 0.05;
+      coord += echoOffset;
+    } else {
+      // Temporal lag - sample from slightly shifted position
+      float lag = amount * 0.02 * sin(frozenTime + blockSeed * 10.0);
+      coord.x += lag;
+    }
+  }
+  
+  return coord;
+`});setFunction({name:"temporaecho",type:"color",inputs:[{name:"amount",type:"float",default:.6},{name:"echo_delay",type:"float",default:.5},{name:"echo_decay",type:"float",default:.7},{name:"spatial_offset",type:"float",default:.02}],glsl:`
+  vec3 col = _c0.rgb;
+  
+  // Simulate temporal echoes using time-shifted spatial patterns
+  // Since we can't access previous frames, we create echo-like effects using spatial displacement
+  
+  // Create multiple time-shifted spatial patterns
+  float baseTime = time;
+  float echoTime1 = baseTime - echo_delay;
+  float echoTime2 = baseTime - echo_delay * 2.0;
+  
+  // Generate echo patterns based on shifted spatial coordinates
+  vec2 echoCoord1 = _st + spatial_offset * vec2(
+    sin(echoTime1 * 2.0), 
+    cos(echoTime1 * 1.8)
+  );
+  vec2 echoCoord2 = _st + spatial_offset * vec2(
+    sin(echoTime2 * 1.5), 
+    cos(echoTime2 * 2.2)
+  );
+  
+  // Create echo colors using spatial hash functions
+  float echo1Brightness = fract(sin(dot(echoCoord1 * 20.0, vec2(12.9898, 78.233)) + echoTime1) * 43758.5453);
+  float echo2Brightness = fract(sin(dot(echoCoord2 * 25.0, vec2(93.9898, 67.345)) + echoTime2) * 28754.2343);
+  
+  // Apply echo effect by modulating the current color
+  vec3 echo1Color = col * (0.8 + 0.4 * echo1Brightness);
+  vec3 echo2Color = col * (0.6 + 0.6 * echo2Brightness);
+  
+  // Mix echoes with decay
+  col = mix(col, echo1Color, amount * echo_decay * 0.3);
+  col = mix(col, echo2Color, amount * echo_decay * echo_decay * 0.2);
+  
+  // Add some chromatic aberration for echo effect
+  col.r = mix(col.r, echo1Color.r, amount * 0.1);
+  col.b = mix(col.b, echo2Color.b, amount * 0.1);
+  
+  return vec4(clamp(col, 0.0, 1.0), _c0.a);
+`});setFunction({name:"macroblock",type:"coord",inputs:[{name:"amount",type:"float",default:.3},{name:"block_size",type:"float",default:16},{name:"displacement",type:"float",default:.1},{name:"corruption_rate",type:"float",default:.2}],glsl:`
+  vec2 coord = _st;
+  
+  // Create macro block grid
+  vec2 blockId = floor(coord * block_size);
+  vec2 blockCoord = blockId / block_size;
+  vec2 localCoord = fract(coord * block_size);
+  
+  // Generate corruption pattern with temporal persistence
+  float timeStep = floor(time * corruption_rate);
+  float blockSeed = fract(sin(dot(blockId, vec2(12.9898, 78.233)) + timeStep) * 43758.5453);
+  
+  if (blockSeed < 0.3) {
+    // Apply macro block displacement
+    vec2 blockDisplacement = displacement * vec2(
+      sin(blockSeed * 30.0 + timeStep),
+      cos(blockSeed * 25.0 + timeStep * 1.1)
+    );
+    
+    // Move the entire block
+    coord = (blockCoord + blockDisplacement) + localCoord / block_size;
+    
+    // Add some additional chaos within the block
+    if (blockSeed < 0.1) {
+      coord += amount * 0.1 * vec2(
+        sin(localCoord.x * 20.0 + timeStep),
+        cos(localCoord.y * 15.0 + timeStep)
+      ) / block_size;
+    }
+  }
+  
+  return coord;
 `});
