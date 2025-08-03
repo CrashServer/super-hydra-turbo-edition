@@ -381,7 +381,7 @@ export const hydraAutocomplete = {
         "🌁 Screen Space Shaders": { items: "screenSpaceShaders", blankOnly: false },
         "🪞 Fractal Effects": { items: "fractalEffects", blankOnly: false },
         "🧮 Math & Audio": { items: "mathFunctions", blankOnly: false },
-        "🛠️ Utilities": { items: "utilities", blankOnly: false }
+        "🛠️ Utilities": { items: "utilities", blankOnly: true }
     },
 
     // create separator for categories
@@ -431,6 +431,11 @@ export const hydraAutocomplete = {
         this._currentView = 'categories';
         this._currentCategory = null;
         
+        // if we are into parenthese (simple detection)
+        const openParens = (beforeCursor.match(/\(/g) || []).length;
+        const closeParens = (beforeCursor.match(/\)/g) || []).length;
+        const isInParentheses = openParens > closeParens;
+        
         // Array methods
         if (/\]\s*\.\s*[\w*]*$/.test(beforeCursor)) {
             const prefix = beforeCursor.split('.').pop() || '';
@@ -442,8 +447,37 @@ export const hydraAutocomplete = {
                 to: CodeMirror.Pos(cursor.line, cursor.ch)
             };
         }
+
+        // If the cursor is inside parentheses show all suggestions
+        if (isInParentheses) {
+            // Organiser toutes les suggestions par catégories avec séparateurs
+            const allSuggestions = [];
+            Object.keys(this.categories).forEach(categoryName => {
+                const categoryInfo = this.categories[categoryName];
+                const categoryItems = this[categoryInfo.items];
+                if (categoryItems && categoryItems.length > 0) {
+                    allSuggestions.push(this.createCategorySeparator(categoryName, categoryName));
+                    allSuggestions.push(...categoryItems);
+                }
+            });
+            
+            // Find the current word before the cursor
+            const wordMatch = beforeCursor.match(/([\w*]*)$/);
+            const currentWord = wordMatch ? wordMatch[1] : '';
+            const wordStart = cursor.ch - currentWord.length;
+            
+            const filteredSuggestions = this.filterWithWildcards(allSuggestions, currentWord);
+            
+            return {
+                list: filteredSuggestions,
+                from: CodeMirror.Pos(cursor.line, wordStart),
+                to: CodeMirror.Pos(cursor.line, cursor.ch)
+            };
+        }
+        
+        
       
-        // Transformations and effects after a dot - Mode hiérarchique
+        // Transformations and effects after a dot
         if (/\.\s*[\w*]*$/.test(beforeCursor)) {
             const prefix = beforeCursor.split('.').pop() || '';
             const dotIndex = beforeCursor.lastIndexOf('.');
@@ -453,7 +487,7 @@ export const hydraAutocomplete = {
                 const categorySuggestions = [];
                 Object.keys(this.categories).forEach(categoryName => {
                     const categoryInfo = this.categories[categoryName];
-                    if (!categoryInfo.blankOnly) { // Pour les effets/transformations
+                    if (!categoryInfo.blankOnly) { // For the effects/transformations
                         const separator = this.createCategorySeparator(categoryName, categoryName);
                         categorySuggestions.push(separator);
                     }
@@ -518,30 +552,20 @@ export const hydraAutocomplete = {
         const wordEnd = cursor.ch;
         prefix = line.slice(wordStart, wordEnd);
         
-        // complete list of all suggestions
-        const allSuggestions = [
-            ...this.sources,
-            ...this.noise,
-            ...this.art,
-            ...this.pattern,
-            ...this.antliaShapes,
-            ...this.implicitCurves,
-            ...this.parametricSurfaces,
-            ...this.initSources,
-            ...this.transformations,
-            ...this.effects,
-            ...this.colorEffects,
-            ...this.fractalEffects,
-            ...this.screenSpaceShaders,
-            ...this.space,
-            ...this.databending,
-            ...this.utilities,
-            ...this.mathFunctions
-        ];
+        // complete list of all suggestions organized by categories
+        const allSuggestions = [];
+        Object.keys(this.categories).forEach(categoryName => {
+            const categoryInfo = this.categories[categoryName];
+            const categoryItems = this[categoryInfo.items];
+            if (categoryItems && categoryItems.length > 0) {
+                allSuggestions.push(this.createCategorySeparator(categoryName, categoryName));
+                allSuggestions.push(...categoryItems);
+            }
+        });
         
         // filter prefix with wildcards
         const filteredSuggestions = this.filterWithWildcards(allSuggestions, prefix);
-        
+
         return {
             list: filteredSuggestions,
             from: CodeMirror.Pos(cursor.line, wordStart),
