@@ -1,7 +1,11 @@
+import { textmode } from 'textmode.js';
+
 export const configPanel = {
     panel: null,
     editor: null,
     popupWindow: null,
+    asciiCanvas: null,
+    asciiMode: false,
 
     shortcuts: [
         { key: 'Ctrl+Enter', description: 'Execute code block' },
@@ -37,6 +41,7 @@ export const configPanel = {
         const showAboutBtn = document.getElementById('show-about');
         const aboutModal = document.getElementById('about-modal');
         const closeAboutBtn = document.getElementById('close-about');
+        const asciiCheckbox = document.getElementById('ascii-mode');
 
         // open/close config panel
         configToggle.addEventListener('click', () => this.togglePanel());
@@ -60,6 +65,16 @@ export const configPanel = {
         themeSelect.addEventListener('change', (e) => {
             this.editor.setOption('theme', e.target.value);
             this.saveSettings();
+        });
+
+        // Ascii mode toggle
+        asciiCheckbox.addEventListener('change', (e) => {
+            this.asciiMode = e.target.checked;
+            if (this.asciiMode) {
+                this.ascii(true);
+            } else {
+                this.ascii(false);
+            }
         });
 
         // Popup Canvas clone
@@ -242,6 +257,26 @@ export const configPanel = {
             theme: document.getElementById('theme-select').value
         };
         localStorage.setItem('editor-settings', JSON.stringify(settings));
+    },
+
+    async ascii(active=true) {
+        if (active) {
+            const canvas = document.querySelector('canvas#canvas');
+            if(!canvas) {
+                throw new Error('Canvas element not found');
+            }
+            if (!this.asciiCanvas) {
+                this.asciiCanvas = await textmode.create(canvas )
+                eval('setResolution(400, 400)');
+            }    
+        } else {
+            if (this.asciiCanvas) {
+                const canvas = document.querySelector('canvas.textmodeCanvas');
+                canvas.remove();
+                this.asciiCanvas = null;
+                eval('setResolution(1920, 1080)');
+            }
+        }
     },
 
 };

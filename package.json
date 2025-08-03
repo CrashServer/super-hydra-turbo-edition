@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "codemirror": "^5.65.19",
-    "hydra-synth": "^1.3.29"
+    "hydra-synth": "^1.3.29",
+    "textmode.js": "^0.1.3"
   }
 }

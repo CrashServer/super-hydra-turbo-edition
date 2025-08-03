@@ -6,6 +6,7 @@
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.min.js" defer></script> -->
+   <!-- <script src="https://cdn.jsdelivr.net/npm/textmode.js@latest/dist/textmode.umd.js"></script> -->
   <title>Super Hydra Turbo Edition</title>
 </head>
 
@@ -60,6 +61,11 @@
         </select>
       </div>
 
+      <div class="config-section checkbox-container">
+        <label for="ascii-mode">Ascii Mode</label>
+        <input type="checkbox" id="ascii-mode" >
+      </div>
+
       <div class="config-section">
         <h4>Shortcuts</h4>
         <div id="shortcuts-list"></div>
@@ -70,7 +76,10 @@
         <button id="show-about" class="btn btn-secondary">ℹ️ About & Credits</button>
       </div>
 
-      <!-- Modal About -->
+      
+    </div>
+  </div>
+  <!-- Modal About -->
       <div id="about-modal" class="about-modal">
         <div class="about-content">
           <div class="about-header">
@@ -134,6 +143,13 @@
               </div>
 
               <div class="tool-item">
+                <strong>Textmode.js</strong>
+                <span>by humanbydefinition</span>
+                <p>ASCII art rendering library for canvas elements, enabling text-based graphics.</p>
+                <a href="https://github.com/humanbydefinition/textmode.js" target="_blank"></a>
+              </div>
+
+              <div class="tool-item">
                 <strong>CodeMirror</strong>
                 <span>by Marijn Haverbeke</span>
                 <p>Advanced code editor component providing syntax highlighting, autocompletion, and editing features.
@@ -159,9 +175,7 @@
             </div>
           </div>
         </div>
-      </div>
-    </div>
-
+      </div>  
     <script type="module" src="/src/js/main.js"></script>
 </body>
 
